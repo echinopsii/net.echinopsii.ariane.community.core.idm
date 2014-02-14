@@ -19,16 +19,108 @@
 
 package com.spectral.cc.core.idm.commons.model;
 
-public interface IUser {
-    public String getFirstname();
-    public void setFirstname(String firstname);
+import java.util.Set;
 
-    public String getLastname();
-    public void setLastname(String lastname);
+/**
+ * CC IDM user interface
+ */
+public interface IUser<G, R> {
 
+    /**
+     * Get username (shiro principal)
+     *
+     * @return username
+     */
+    public String getUserName();
+
+    /**
+     * Set username (shiro principal)
+     *
+     * @param username (not null and must be unique)
+     */
+    public void setUserName(String username);
+
+    /**
+     * Get user first name
+     *
+     * @return user first name
+     */
+    public String getFirstName();
+
+    /**
+     * Set user first name
+     *
+     * @param firstname (not null)
+     */
+    public void setFirstName(String firstname);
+
+    /**
+     * Get user last name
+     *
+     * @return user last name
+     */
+    public String getLastName();
+
+    /**
+     * Set user last name
+     *
+     * @param lastname (not null)
+     */
+    public void setLastName(String lastname);
+
+    /**
+     * Get user email
+     *
+     * @return user email
+     */
     public String getEmail();
+
+    /**
+     * Set user email
+     *
+     * @param email (not null and must be unique)
+     */
     public void setEmail(String email);
 
+    /**
+     * Get user phone number
+     *
+     * @return user phone number
+     */
     public String getPhone();
+
+    /**
+     * Set user phone number
+     *
+     * @param phone (not null and must be unique)
+     */
     public void setPhone(String phone);
+
+    /**
+     * Get user groups
+     *
+     * @return user groups
+     */
+    public Set<G> getGroups();
+
+    /**
+     * Set user groups
+     *
+     * @param groups
+     */
+    public void setGroups(Set<G> groups);
+
+    /**
+     * Get user roles
+     *
+     * @return user roles
+     */
+    public Set<R> getRoles();
+
+    /**
+     * Set user roles
+     *
+     * @param roles
+     */
+    public void setRoles(Set<R> roles);
 }

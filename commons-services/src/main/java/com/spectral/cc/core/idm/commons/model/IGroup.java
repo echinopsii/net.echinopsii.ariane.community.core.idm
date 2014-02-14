@@ -1,7 +1,7 @@
 /**
- * [DEFINE YOUR PROJECT NAME/MODULE HERE]
- * [DEFINE YOUR PROJECT DESCRIPTION HERE] 
- * Copyright (C) 12/02/14 echinopsii
+ * IDM Commons Services bundle
+ * Group model interface
+ * Copyright (C) 2014 Mathilde Ffrench
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -19,5 +19,22 @@
 
 package com.spectral.cc.core.idm.commons.model;
 
-public interface IGroup {
+/**
+ * CC IDM group interface
+ */
+public interface IGroup<R> {
+
+    /**
+     * Get the group name
+     *
+     * @return group name
+     */
+    public String getName();
+
+    /**
+     * Set the group name
+     *
+     * @param name (must be unique)
+     */
+    public void setName(String name);
 }

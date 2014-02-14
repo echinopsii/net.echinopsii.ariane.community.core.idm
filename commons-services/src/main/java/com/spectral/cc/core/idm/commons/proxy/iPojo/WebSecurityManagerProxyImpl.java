@@ -18,9 +18,12 @@
  */
 package com.spectral.cc.core.idm.commons.proxy.iPojo;
 
+import com.spectral.cc.core.idm.commons.proxy.IDMJPAProvider;
 import com.spectral.cc.core.idm.commons.proxy.WebSecurityManagerProxy;
+import com.spectral.cc.core.idm.commons.realms.JPARealm;
 import org.apache.felix.ipojo.annotations.*;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.config.ConfigurationException;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.util.StringUtils;
@@ -44,7 +47,7 @@ import java.io.InputStream;
 @Component
 @Provides
 @Instantiate
-public class WebSecurityManagerProxyImpl implements WebSecurityManagerProxy {
+public class WebSecurityManagerProxyImpl extends JPARealm implements WebSecurityManagerProxy {
 
     private static final String SECURITY_MANAGER_PROXY_SERVICE_NAME = "Security Manager Proxy Service";
     private static final String SHIRO_BASE_INI_FILE_PATH = "shiro.ini";
@@ -52,6 +55,20 @@ public class WebSecurityManagerProxyImpl implements WebSecurityManagerProxy {
 
     private WebIniSecurityManagerFactory factory;
     private WebSecurityManager securityManager;
+
+    @Override
+    @Bind
+    public void bindIdmjpaProvider(IDMJPAProvider jprovider) {
+        log.info("Bound to IDM JPA provider...");
+        setIdmjpaProvider(jprovider);
+    }
+
+    @Override
+    @Unbind
+    public void unbindIdmjpaProvider() {
+        log.info("Unbound from IDM JPA provider...");
+        setIdmjpaProvider(null);
+    }
 
     private static Ini convertPathToIni() {
         Ini ini = null;
@@ -72,25 +89,18 @@ public class WebSecurityManagerProxyImpl implements WebSecurityManagerProxy {
         log.info("{} is starting...", new Object[]{SECURITY_MANAGER_PROXY_SERVICE_NAME});
         factory = new WebIniSecurityManagerFactory(convertPathToIni());
         securityManager = (WebSecurityManager)factory.getInstance();
-        /*
-         * TODO: investigate...
-         * shiro core class loading raise Class Not Found Exception with shiro.ini configuration :
-         * sessionManager = org.apache.shiro.web.session.mgt.DefaultWebSessionManager
-         * securityManager.sessionManager = $sessionManager
-         */
+
         ((DefaultWebSecurityManager)securityManager).setSessionManager(new DefaultWebSessionManager());
-        /*
-         * TODO: investigate...
-         * same classloader problem with :
-         * cookie = org.apache.shiro.web.servlet.SimpleCookie
-         * cookie.name = SSOcookie
-         * cookie.path = /
-         * securityManager.sessionManager.sessionIdCookie = $cookie
-         */
+        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+        matcher.setHashAlgorithmName("SHA-512");
+        matcher.setStoredCredentialsHexEncoded(false);
+        matcher.setHashIterations(2048);
+        this.setCredentialsMatcher(matcher);
+        ((DefaultWebSecurityManager)securityManager).setRealm(this);
+
         Cookie cookie = new SimpleCookie();
         cookie.setHttpOnly(true);
         cookie.setName("CC_SSO");
-        //cookie.setDomain("CC");
         cookie.setPath("/");
         // TODO: problems with rememberMe... to be investigating
         //CookieRememberMeManager rememberMeManager = new CookieRememberMeManager();
@@ -99,6 +109,7 @@ public class WebSecurityManagerProxyImpl implements WebSecurityManagerProxy {
         ((DefaultWebSessionManager)((DefaultWebSecurityManager)securityManager).getSessionManager()).setSessionIdCookie(cookie);
         //((DefaultWebSessionManager)((DefaultWebSecurityManager)securityManager).getSessionManager()).setSessionIdCookie(rememberMeManager.getCookie());
         ((DefaultWebSessionManager)((DefaultWebSecurityManager)securityManager).getSessionManager()).setSessionIdCookieEnabled(true);
+
         SecurityUtils.setSecurityManager(securityManager);
         log.info("{} is started...", new Object[]{SECURITY_MANAGER_PROXY_SERVICE_NAME});
     }

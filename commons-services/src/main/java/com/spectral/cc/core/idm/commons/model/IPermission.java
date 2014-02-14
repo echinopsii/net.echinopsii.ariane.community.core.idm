@@ -1,7 +1,7 @@
 /**
- * [DEFINE YOUR PROJECT NAME/MODULE HERE]
- * [DEFINE YOUR PROJECT DESCRIPTION HERE] 
- * Copyright (C) 12/02/14 echinopsii
+ * IDM Commons Services bundle
+ * Permission model interface
+ * Copyright (C) 2014 Mathilde Ffrench
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -19,5 +19,44 @@
 
 package com.spectral.cc.core.idm.commons.model;
 
-public interface IPermission {
+/**
+ * CC IDM permission interface
+ */
+public interface IPermission<R> {
+
+    /**
+     * get the permission name
+     * @return permission name
+     */
+    public String getName();
+
+    /**
+     * set the permission name
+     * @param name (must be unique)
+     */
+    public void setName(String name);
+
+    /**
+     * get the permission description
+     * @return the permission description
+     */
+    public String getDescription();
+
+    /**
+     * set the permission description
+     * @param description
+     */
+    public void setDescription(String description);
+
+    /**
+     * get the resource binded to this permission
+     * @return the permission's resource
+     */
+    public R getResource();
+
+    /**
+     * set the resource to bind to this permission. Permission MUST be binded to a resource
+     * @param resource (not null)
+     */
+    public void setResource(R resource);
 }

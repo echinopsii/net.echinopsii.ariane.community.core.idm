@@ -48,7 +48,13 @@
                         <Embed-Dependency>*;scope=compile|runtime</Embed-Dependency>
                         <Embed-Transitive>true</Embed-Transitive>
                         <Import-Package>
+                            javassist.util.proxy,
+                            javax.persistence;version="[${version.osgimin.javax.persistence},${version.osgimax.javax.persistence})",
+                            javax.persistence.criteria;version="[${version.osgimin.javax.persistence},${version.osgimax.javax.persistence})",
+                            javax.persistence.spi;version="[${version.osgimin.javax.persistence},${version.osgimax.javax.persistence})",
+                            javax.transaction;version="${version.javax.transaction.jta}",
                             org.apache.shiro;version="${version.org.apache.shiro}",
+                            org.apache.shiro.authz.permission;version="${version.org.apache.shiro}",
                             org.apache.shiro.config;version="${version.org.apache.shiro}",
                             org.apache.shiro.mgt;version="${version.org.apache.shiro}",
                             org.apache.shiro.session.mgt;version="${version.org.apache.shiro}",
@@ -68,10 +74,19 @@
                             org.apache.shiro.web.subject.support;version="${version.org.apache.shiro}",
                             org.apache.shiro.web.util;version="${version.org.apache.shiro}",
                             org.apache.shiro.web.tags;version="${version.org.apache.shiro}",
-                            org.slf4j;version="${version.org.slf4j}"
+                            org.h2;resolution:=optional,
+                            org.mariadb.jdbc;resolution:=optional,
+                            org.hibernate.proxy;version="[${version.osgimin.hibernate},${version.osgimax.hibernate})",
+                            org.hibernate.jpa;version="[${version.osgimin.hibernate},${version.osgimax.hibernate})",
+                            org.hibernate.jpa.boot.internal;version="[${version.osgimin.hibernate},${version.osgimax.hibernate})",
+                            org.hibernate.jpa.boot.spi;version="[${version.osgimin.hibernate},${version.osgimax.hibernate})",
+                            org.osgi.framework;version="[${version.osgimin.org.osgi.framework},${version.osgimax.org.osgi.framework})",
+                            org.slf4j;version="${version.org.slf4j}",
+                            *
                         </Import-Package>
                         <Export-Package>
                             com.spectral.cc.core.idm.commons.model;version=${project.version},
+                            com.spectral.cc.core.idm.commons.model.jpa;version=${project.version},
                             com.spectral.cc.core.idm.commons.proxy;version=${project.version}
                         </Export-Package>
                     </instructions>

@@ -1,7 +1,7 @@
 /**
- * [DEFINE YOUR PROJECT NAME/MODULE HERE]
- * [DEFINE YOUR PROJECT DESCRIPTION HERE] 
- * Copyright (C) 12/02/14 echinopsii
+ * IDM Commons Services bundle
+ * Resource model interface
+ * Copyright (C) 2014 Mathilde Ffrench
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -19,5 +19,47 @@
 
 package com.spectral.cc.core.idm.commons.model;
 
-public interface IResource {
+import java.util.Set;
+
+/**
+ * CC IDM resource interface
+ */
+public interface IResource<P> {
+
+    /**
+     * Get the resource name
+     * @return the resource name
+     */
+    public String getName();
+
+    /**
+     * Set the resource name
+     * @param name (must be unique)
+     */
+    public void setName(String name);
+
+    /**
+     * Get the resource description
+     * @return the resource description
+     */
+    public String getDescription();
+
+    /**
+     * Set the resource description
+     * @param description
+     */
+    public void setDescription(String description);
+
+    /**
+     * Get binded permissions to this resource
+     * @return
+     */
+    public Set<P> getPermissions();
+
+    /**
+     * Set binded permissions to this resources
+     * @param permissions (valid resource must have at least one permission)
+     */
+    public void setPermissions(Set<P> permissions);
+
 }
