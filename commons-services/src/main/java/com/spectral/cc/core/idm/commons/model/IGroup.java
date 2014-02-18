@@ -37,4 +37,18 @@ public interface IGroup<R> {
      * @param name (must be unique)
      */
     public void setName(String name);
+
+    /**
+     * Get the group description
+     *
+     * @return group description
+     */
+    public String getDescription();
+
+    /**
+     * Set the group description
+     *
+     * @param description
+     */
+    public void setDescription(String description) ;
 }

@@ -61,6 +61,24 @@ public class Resource implements IResource<Permission>, Serializable {
         this.id = id;
     }
 
+    public Resource setIdR(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public Resource setVersionR(int version) {
+        this.version = version;
+        return this;
+    }
+
     @Override
     public String getName() {
         return this.name;
@@ -69,6 +87,11 @@ public class Resource implements IResource<Permission>, Serializable {
     @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Resource setNameR(String name) {
+        this.name = name;
+        return this;
     }
 
     @Override
@@ -81,6 +104,11 @@ public class Resource implements IResource<Permission>, Serializable {
         this.description = description;
     }
 
+    public Resource setDescriptionR(String description) {
+        this.description = description;
+        return this;
+    }
+
     @Override
     public Set<Permission> getPermissions() {
         return permissions;
@@ -89,5 +117,37 @@ public class Resource implements IResource<Permission>, Serializable {
     @Override
     public void setPermissions(Set<Permission> permissions) {
         this.permissions = permissions;
+    }
+
+    public Resource setPermissionsR(Set<Permission> permissions) {
+        this.permissions = permissions;
+        return this;
+    }
+
+    public Resource clone() {
+        return new Resource().setIdR(this.id).setVersionR(this.version).setNameR(this.name).setDescriptionR(this.description).setPermissionsR(new HashSet<Permission>(this.permissions));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Resource resource = (Resource) o;
+
+        if (id != null ? !id.equals(resource.id) : resource.id != null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

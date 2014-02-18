@@ -64,12 +64,22 @@ public class Permission implements IPermission<Resource>, Serializable {
         this.id = id;
     }
 
+    public Permission setIdR(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public int getVersion() {
         return version;
     }
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public Permission setVersionR(int version) {
+        this.version = version;
+        return this;
     }
 
     @Override
@@ -82,6 +92,11 @@ public class Permission implements IPermission<Resource>, Serializable {
         this.name = name;
     }
 
+    public Permission setNameR(String name) {
+        this.name = name;
+        return this;
+    }
+
     @Override
     public String getDescription() {
         return this.description;
@@ -90,6 +105,11 @@ public class Permission implements IPermission<Resource>, Serializable {
     @Override
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Permission setDescriptionR(String description) {
+        this.description = description;
+        return this;
     }
 
     @Override
@@ -102,11 +122,49 @@ public class Permission implements IPermission<Resource>, Serializable {
         this.resource = resource;
     }
 
+    public Permission setResourceR(Resource resource) {
+        this.resource = resource;
+        return this;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Permission setRolesR(Set<Role> roles) {
+        this.roles = roles;
+        return this;
+    }
+
+    public Permission clone() {
+        return new Permission().setIdR(this.id).setVersionR(this.version).setNameR(this.name).setDescriptionR(this.description).setResourceR(this.resource).
+                                setRolesR(new HashSet<Role>(this.roles));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Permission that = (Permission) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

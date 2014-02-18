@@ -46,6 +46,9 @@ public class Group implements IGroup, Serializable {
     @NotNull
     private String name;
 
+    @Column
+    private String description;
+
     @ManyToMany
     private Set<User> users = new HashSet<User>();
 
@@ -60,12 +63,22 @@ public class Group implements IGroup, Serializable {
         this.id = id;
     }
 
+    public Group setIdR(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public int getVersion() {
         return version;
     }
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public Group setVersionR(int version) {
+        this.version = version;
+        return this;
     }
 
     @Override
@@ -78,6 +91,26 @@ public class Group implements IGroup, Serializable {
         this.name = name;
     }
 
+    public Group setNameR(String name) {
+        this.name = name;
+        return this;
+    }
+
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Group setDescriptionR(String description) {
+        this.description = description;
+        return this;
+    }
+
     public Set<User> getUsers() {
         return users;
     }
@@ -86,11 +119,26 @@ public class Group implements IGroup, Serializable {
         this.users = users;
     }
 
+    public Group setUsersR(Set<User> users) {
+        this.users = users;
+        return this;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Group setRolesR(Set<Role> roles) {
+        this.roles = roles;
+        return this;
+    }
+
+    public Group clone() {
+        return new Group().setIdR(this.id).setVersionR(this.version).setNameR(this.name).setDescriptionR(description).
+                           setUsersR(new HashSet<User>(users)).setRolesR(new HashSet<Role>(roles));
     }
 }

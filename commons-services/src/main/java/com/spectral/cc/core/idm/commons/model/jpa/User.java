@@ -20,6 +20,10 @@
 package com.spectral.cc.core.idm.commons.model.jpa;
 
 import com.spectral.cc.core.idm.commons.model.IUser;
+import org.apache.shiro.crypto.RandomNumberGenerator;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.Sha512Hash;
+import org.apache.shiro.util.ByteSource;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -61,7 +65,7 @@ public class User implements IUser<Group, Role>, Serializable {
 
     @Column
     @NotNull
-    private String hashedPassword;
+    private String password;
 
     @Column
     @NotNull
@@ -85,12 +89,22 @@ public class User implements IUser<Group, Role>, Serializable {
         this.id = id;
     }
 
+    public User setIdR(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public int getVersion() {
         return version;
     }
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public User setVersionR(int version) {
+        this.version = version;
+        return this;
     }
 
     @Override
@@ -103,6 +117,11 @@ public class User implements IUser<Group, Role>, Serializable {
         this.userName = userName;
     }
 
+    public User setUserNameR(String userName) {
+        this.userName = userName;
+        return this;
+    }
+
     @Override
     public String getFirstName() {
         return this.firstName;
@@ -111,6 +130,11 @@ public class User implements IUser<Group, Role>, Serializable {
     @Override
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public User setFirstNameR(String firstName) {
+        this.firstName = firstName;
+        return this;
     }
 
     @Override
@@ -123,6 +147,11 @@ public class User implements IUser<Group, Role>, Serializable {
         this.lastName = lastName;
     }
 
+    public User setLastNameR(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
     @Override
     public String getEmail() {
         return this.email;
@@ -133,12 +162,28 @@ public class User implements IUser<Group, Role>, Serializable {
         this.email = email;
     }
 
-    public String getHashedPassword() {
-        return hashedPassword;
+    public User setEmailR(String email) {
+        this.email = email;
+        return this;
     }
 
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        RandomNumberGenerator rng = new SecureRandomNumberGenerator();
+        ByteSource salt = rng.nextBytes();
+        this.password = new Sha512Hash(password, salt, 2048).toBase64();
+        this.passwordSalt = salt.getBytes();
+    }
+
+    public User setPasswordR(String password) {
+        RandomNumberGenerator rng = new SecureRandomNumberGenerator();
+        ByteSource salt = rng.nextBytes();
+        this.password = new Sha512Hash(password, salt, 2048).toBase64();
+        this.passwordSalt = salt.getBytes();
+        return this;
     }
 
     public byte[] getPasswordSalt() {
@@ -147,6 +192,11 @@ public class User implements IUser<Group, Role>, Serializable {
 
     public void setPasswordSalt(byte[] passwordSalt) {
         this.passwordSalt = passwordSalt;
+    }
+
+    public User setPasswordSaltR(byte[] passwordSalt) {
+        this.passwordSalt = passwordSalt;
+        return this;
     }
 
     @Override
@@ -159,6 +209,11 @@ public class User implements IUser<Group, Role>, Serializable {
         this.phone = phone;
     }
 
+    public User setPhoneR(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
     @Override
     public Set<Group> getGroups() {
         return groups;
@@ -169,6 +224,11 @@ public class User implements IUser<Group, Role>, Serializable {
         this.groups = groups;
     }
 
+    public User setGroupsR(Set<Group> groups) {
+        this.groups = groups;
+        return this;
+    }
+
     @Override
     public Set<Role> getRoles() {
         return this.roles;
@@ -177,5 +237,16 @@ public class User implements IUser<Group, Role>, Serializable {
     @Override
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public User setRolesR(Set<Role> roles) {
+        this.roles = roles;
+        return this;
+    }
+
+    public User clone() {
+        return new User().setIdR(this.id).setVersionR(this.version).setUserNameR(this.userName).setFirstNameR(this.firstName).setLastNameR(this.lastName).
+                          setEmailR(this.email).setPhoneR(this.phone).setPasswordR(this.password).setPasswordSaltR(this.passwordSalt).
+                          setGroupsR(new HashSet<Group>(this.groups)).setRolesR(new HashSet<Role>(this.roles));
     }
 }

@@ -67,12 +67,22 @@ public class Role implements IRole<Permission>, Serializable {
         this.id = id;
     }
 
+    public Role setIdR(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public int getVersion() {
         return version;
     }
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public Role setVersionR(int version) {
+        this.version = version;
+        return this;
     }
 
     @Override
@@ -85,6 +95,11 @@ public class Role implements IRole<Permission>, Serializable {
         this.name = name;
     }
 
+    public Role setNameR(String name) {
+        this.name = name;
+        return this;
+    }
+
     @Override
     public String getDescription() {
         return description;
@@ -93,6 +108,11 @@ public class Role implements IRole<Permission>, Serializable {
     @Override
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Role setDescriptionR(String description) {
+        this.description = description;
+        return this;
     }
 
     @Override
@@ -105,6 +125,11 @@ public class Role implements IRole<Permission>, Serializable {
         this.permissions = permissions;
     }
 
+    public Role setPermissionsR(Set<Permission> permissions) {
+        this.permissions = permissions;
+        return this;
+    }
+
     public Set<User> getUsers() {
         return users;
     }
@@ -113,11 +138,26 @@ public class Role implements IRole<Permission>, Serializable {
         this.users = users;
     }
 
+    public Role setUsersR(Set<User> users) {
+        this.users = users;
+        return this;
+    }
+
     public Set<Group> getGroups() {
         return groups;
     }
 
     public void setGroups(Set<Group> groups) {
         this.groups = groups;
+    }
+
+    public Role setGroupsR(Set<Group> groups) {
+        this.groups = groups;
+        return this;
+    }
+
+    public Role clone() {
+        return new Role().setIdR(id).setVersionR(version).setNameR(name).setDescriptionR(description).setPermissionsR(new HashSet<Permission>(permissions)).
+                          setUsersR(new HashSet<User>(users)).setGroupsR(new HashSet<Group>(groups));
     }
 }

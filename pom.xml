@@ -43,8 +43,8 @@
         <version.war.plugin>2.1.1</version.war.plugin>
         <version.ipojo.plugin>1.10.0</version.ipojo.plugin>
 
-        <!-- CC module dependencies -->
-        <version.com.spectral.cc.core.portal>0.2.0.SNAPSHOT</version.com.spectral.cc.core.portal>
+        <!-- Dependencies versions-->
+        <version.org.apache.shiro>1.2.2</version.org.apache.shiro>
 
         <!-- Dependencies versions-->
         <version.javax.annotations.jsr250-api>1.0</version.javax.annotations.jsr250-api>
@@ -58,6 +58,7 @@
         <version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api>1.0.0.Final</version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api>
 
         <!-- Technical stuff -->
+        <version.commons.beanutils>1.8.3</version.commons.beanutils>
         <version.org.apache.ipojo>1.10.1</version.org.apache.ipojo>
         <version.org.slf4j>1.6.4</version.org.slf4j>
 
@@ -74,14 +75,14 @@
         <version.osgimin.org.jboss.resteasy>2.3.6</version.osgimin.org.jboss.resteasy>
         <version.osgimax.org.jboss.resteasy>2.4</version.osgimax.org.jboss.resteasy>
 
+        <version.osgimin.javax.servlet-api>3.0.0</version.osgimin.javax.servlet-api>
+        <version.osgimax.javax.servlet-api>3.1.0</version.osgimax.javax.servlet-api>
+
         <version.osgimin.javax.persistence>2.0.0</version.osgimin.javax.persistence>
         <version.osgimax.javax.persistence>3.0.0</version.osgimax.javax.persistence>
 
         <version.osgimin.hibernate>4.2.8</version.osgimin.hibernate>
         <version.osgimax.hibernate>5.0.0</version.osgimax.hibernate>
-
-        <version.osgimin.javax.servlet-api>3.0.0</version.osgimin.javax.servlet-api>
-        <version.osgimax.javax.servlet-api>3.1.0</version.osgimax.javax.servlet-api>
 
         <!-- jUnit test version -->
         <version.junit.junit>4.11</version.junit.junit>
@@ -198,6 +199,12 @@
             <version>3.1.1</version>
         </dependency>
         -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <scope>provided</scope>
+            <version>${version.commons.beanutils}</version>
+        </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

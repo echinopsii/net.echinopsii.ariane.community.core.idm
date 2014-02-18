@@ -22,6 +22,7 @@ package com.spectral.cc.core.idm.commons.proxy;
 import org.osgi.framework.Bundle;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 /**
  * The IDM JPA provider provide tools to create EntityManager for the cc-idm persistence unit. It also add a feature to extend the cc-idm persistance unit through CC plugins. <br/><br/>

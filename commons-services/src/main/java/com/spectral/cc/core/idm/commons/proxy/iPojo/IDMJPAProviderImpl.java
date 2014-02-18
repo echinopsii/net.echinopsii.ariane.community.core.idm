@@ -22,10 +22,8 @@ package com.spectral.cc.core.idm.commons.proxy.iPojo;
 import com.spectral.cc.core.idm.commons.model.jpa.User;
 import com.spectral.cc.core.idm.commons.proxy.IDMJPAProvider;
 import org.apache.felix.ipojo.annotations.*;
-import org.apache.shiro.crypto.RandomNumberGenerator;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.Sha512Hash;
-import org.apache.shiro.util.ByteSource;
+import org.hibernate.CacheMode;
+import org.hibernate.jpa.HibernateEntityManager;
 import org.hibernate.osgi.HibernateOSGiService;
 import org.hibernate.osgi.OsgiScanner;
 import org.osgi.framework.Bundle;
@@ -99,6 +97,9 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
         this.hibernateOSGiService = null;
     }
 
+    /**
+     * init in memory h2 db - for dev only
+     */
     private void initH2() {
         User user = null;
         EntityManager em = this.createEM();
@@ -124,11 +125,7 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
             user.setLastName("root");
             user.setEmail("root@spectral.com");
             user.setPhone("6969");
-            RandomNumberGenerator rng = new SecureRandomNumberGenerator();
-            ByteSource salt = rng.nextBytes();
-            String hashedPasswordBase64 = new Sha512Hash("secret", salt, 2048).toBase64();
-            user.setHashedPassword(hashedPasswordBase64);
-            user.setPasswordSalt(salt.getBytes());
+            user.setPassword("secret");
             em.persist(user);
             em.flush();
             em.getTransaction().commit();

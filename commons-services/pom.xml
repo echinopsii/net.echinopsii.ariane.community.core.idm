@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>com.spectral.cc.core.idm</groupId>
-    <artifactId>com.spectral.cc.core.idm.commons-services</artifactId>
+    <artifactId>com.spectral.cc.core.portal.idm.commons-services</artifactId>
     <name>Control and Conquer Core IDM Commons Services</name>
     <packaging>bundle</packaging>
 

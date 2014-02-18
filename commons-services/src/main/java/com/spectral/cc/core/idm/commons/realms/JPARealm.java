@@ -24,10 +24,6 @@ import com.spectral.cc.core.idm.commons.model.jpa.Permission;
 import com.spectral.cc.core.idm.commons.model.jpa.Role;
 import com.spectral.cc.core.idm.commons.model.jpa.User;
 import com.spectral.cc.core.idm.commons.proxy.IDMJPAProvider;
-import org.apache.felix.ipojo.annotations.Bind;
-import org.apache.felix.ipojo.annotations.Component;
-import org.apache.felix.ipojo.annotations.Requires;
-import org.apache.felix.ipojo.annotations.Unbind;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -149,7 +145,7 @@ public abstract class JPARealm  extends AuthorizingRealm {
         log.debug("Close entity manager ...");
         em.close();
 
-        info = new SimpleAuthenticationInfo(username, user.getHashedPassword().toCharArray(), getName());
+        info = new SimpleAuthenticationInfo(username, user.getPassword().toCharArray(), getName());
         info.setCredentialsSalt(ByteSource.Util.bytes(user.getPasswordSalt()));
         return info;
     }
