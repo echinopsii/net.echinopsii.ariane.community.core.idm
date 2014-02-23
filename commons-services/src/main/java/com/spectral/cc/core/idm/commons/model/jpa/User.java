@@ -35,7 +35,7 @@ import java.util.Set;
 
 @Entity
 @XmlRootElement
-@Table(name="user", uniqueConstraints = @UniqueConstraint(columnNames = {"userEmail"}))
+@Table(name="user", uniqueConstraints = @UniqueConstraint(columnNames = {"userEmail","userName"}))
 public class User implements IUser<Group, Role>, Serializable {
 
     @Id
@@ -47,7 +47,7 @@ public class User implements IUser<Group, Role>, Serializable {
     @Column(name = "version")
     private int version = 0;
 
-    @Column
+    @Column(name = "userName", unique = true)
     @NotNull
     private String userName;
 
@@ -80,6 +80,9 @@ public class User implements IUser<Group, Role>, Serializable {
 
     @ManyToMany
     private Set<Role> roles = new HashSet<Role>();
+
+    @OneToMany
+    private Set<UserPreference> preferences = new HashSet<UserPreference>();
 
     public Long getId() {
         return id;
@@ -244,9 +247,45 @@ public class User implements IUser<Group, Role>, Serializable {
         return this;
     }
 
+    public Set<UserPreference> getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(Set<UserPreference> preferences) {
+        this.preferences = preferences;
+    }
+
+    public User setPreferencesR(Set<UserPreference> preferences) {
+        this.preferences = preferences;
+        return this;
+    }
+
     public User clone() {
         return new User().setIdR(this.id).setVersionR(this.version).setUserNameR(this.userName).setFirstNameR(this.firstName).setLastNameR(this.lastName).
                           setEmailR(this.email).setPhoneR(this.phone).setPasswordR(this.password).setPasswordSaltR(this.passwordSalt).
-                          setGroupsR(new HashSet<Group>(this.groups)).setRolesR(new HashSet<Role>(this.roles));
+                          setGroupsR(new HashSet<Group>(this.groups)).setRolesR(new HashSet<Role>(this.roles)).setPreferencesR(new HashSet<UserPreference>(this.preferences));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        User user = (User) o;
+
+        if (!id.equals(user.id)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

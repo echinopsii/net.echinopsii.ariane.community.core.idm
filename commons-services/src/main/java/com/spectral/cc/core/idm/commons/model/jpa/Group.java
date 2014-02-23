@@ -141,4 +141,27 @@ public class Group implements IGroup, Serializable {
         return new Group().setIdR(this.id).setVersionR(this.version).setNameR(this.name).setDescriptionR(description).
                            setUsersR(new HashSet<User>(users)).setRolesR(new HashSet<Role>(roles));
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Group group = (Group) o;
+
+        if (!id.equals(group.id)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

@@ -1,6 +1,6 @@
 /**
  * IDM Commons Services bundle
- * Resource JPA impl
+ * User Preference JPA impl
  * Copyright (C) 2014 Mathilde Ffrench
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,19 +19,15 @@
 
 package com.spectral.cc.core.idm.commons.model.jpa;
 
-import com.spectral.cc.core.idm.commons.model.IResource;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @XmlRootElement
-@Table(name="resource", uniqueConstraints = @UniqueConstraint(columnNames = {"resourceName"}))
-public class Resource implements IResource<Permission>, Serializable {
+@Table(name="preference")
+public class UserPreference implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,15 +38,17 @@ public class Resource implements IResource<Permission>, Serializable {
     @Column(name = "version")
     private int version = 0;
 
-    @Column(name="resourceName", unique=true)
+    @Column
     @NotNull
-    private String name;
+    private String pkey;
 
     @Column
-    private String description;
+    @NotNull
+    private String pvalue;
 
-    @OneToMany
-    private Set<Permission> permissions = new HashSet<Permission>();
+    @ManyToOne
+    @NotNull
+    private User user;
 
     public Long getId() {
         return id;
@@ -60,7 +58,7 @@ public class Resource implements IResource<Permission>, Serializable {
         this.id = id;
     }
 
-    public Resource setIdR(Long id) {
+    public UserPreference setIdR(Long id) {
         this.id = id;
         return this;
     }
@@ -73,58 +71,52 @@ public class Resource implements IResource<Permission>, Serializable {
         this.version = version;
     }
 
-    public Resource setVersionR(int version) {
+    public UserPreference setVersionR(int version) {
         this.version = version;
         return this;
     }
 
-    @Override
-    public String getName() {
-        return this.name;
+    public String getPkey() {
+        return pkey;
     }
 
-    @Override
-    public void setName(String name) {
-        this.name = name;
+    public void setPkey(String key) {
+        this.pkey = key;
     }
 
-    public Resource setNameR(String name) {
-        this.name = name;
+    public UserPreference setPkeyR(String key) {
+        this.pkey = key;
         return this;
     }
 
-    @Override
-    public String getDescription() {
-        return this.description;
+    public String getPvalue() {
+        return pvalue;
     }
 
-    @Override
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPvalue(String value) {
+        this.pvalue = value;
     }
 
-    public Resource setDescriptionR(String description) {
-        this.description = description;
+    public UserPreference setPvalueR(String value) {
+        this.pvalue = value;
         return this;
     }
 
-    @Override
-    public Set<Permission> getPermissions() {
-        return permissions;
+    public User getUser() {
+        return user;
     }
 
-    @Override
-    public void setPermissions(Set<Permission> permissions) {
-        this.permissions = permissions;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Resource setPermissionsR(Set<Permission> permissions) {
-        this.permissions = permissions;
+    public UserPreference setUserR(User user) {
+        this.user = user;
         return this;
     }
 
-    public Resource clone() {
-        return new Resource().setIdR(this.id).setVersionR(this.version).setNameR(this.name).setDescriptionR(this.description).setPermissionsR(new HashSet<Permission>(this.permissions));
+    public UserPreference clone() {
+        return new UserPreference().setIdR(this.id).setVersionR(this.version).setPkeyR(this.pkey).setPvalueR(this.pvalue).setUserR(this.user.clone());
     }
 
     @Override
@@ -136,9 +128,9 @@ public class Resource implements IResource<Permission>, Serializable {
             return false;
         }
 
-        Resource resource = (Resource) o;
+        UserPreference that = (UserPreference) o;
 
-        if (!id.equals(resource.id)) {
+        if (!id.equals(that.id)) {
             return false;
         }
 

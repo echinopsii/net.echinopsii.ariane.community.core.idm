@@ -8,6 +8,7 @@
         <class>com.spectral.cc.core.idm.commons.model.jpa.Resource</class>
         <class>com.spectral.cc.core.idm.commons.model.jpa.Role</class>
         <class>com.spectral.cc.core.idm.commons.model.jpa.User</class>
+        <class>com.spectral.cc.core.idm.commons.model.jpa.UserPreference</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
     </persistence-unit>

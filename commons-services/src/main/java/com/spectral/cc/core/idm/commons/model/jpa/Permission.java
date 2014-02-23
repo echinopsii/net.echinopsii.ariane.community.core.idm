@@ -156,7 +156,7 @@ public class Permission implements IPermission<Resource>, Serializable {
 
         Permission that = (Permission) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) {
+        if (!id.equals(that.id)) {
             return false;
         }
 
@@ -165,6 +165,6 @@ public class Permission implements IPermission<Resource>, Serializable {
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        return id.hashCode();
     }
 }

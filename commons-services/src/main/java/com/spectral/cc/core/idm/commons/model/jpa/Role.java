@@ -160,4 +160,27 @@ public class Role implements IRole<Permission>, Serializable {
         return new Role().setIdR(id).setVersionR(version).setNameR(name).setDescriptionR(description).setPermissionsR(new HashSet<Permission>(permissions)).
                           setUsersR(new HashSet<User>(users)).setGroupsR(new HashSet<Group>(groups));
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Role role = (Role) o;
+
+        if (!id.equals(role.id)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }
