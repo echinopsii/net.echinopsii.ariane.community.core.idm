@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>commons-services</module>
+        <module>base</module>
     </modules>
 
     <properties>
@@ -41,7 +41,7 @@
         <version.build.helper.plugin>1.8</version.build.helper.plugin>
         <version.license.plugin>1.5</version.license.plugin>
         <version.war.plugin>2.1.1</version.war.plugin>
-        <version.ipojo.plugin>1.10.0</version.ipojo.plugin>
+        <version.ipojo.plugin>1.11.0</version.ipojo.plugin>
 
         <!-- Dependencies versions-->
         <version.org.apache.shiro>1.2.2</version.org.apache.shiro>
@@ -59,7 +59,7 @@
 
         <!-- Technical stuff -->
         <version.commons.beanutils>1.8.3</version.commons.beanutils>
-        <version.org.apache.ipojo>1.10.1</version.org.apache.ipojo>
+        <version.org.apache.ipojo>1.11.0</version.org.apache.ipojo>
         <version.org.slf4j>1.6.4</version.org.slf4j>
 
         <!-- OSGI Min/Max versions -->
