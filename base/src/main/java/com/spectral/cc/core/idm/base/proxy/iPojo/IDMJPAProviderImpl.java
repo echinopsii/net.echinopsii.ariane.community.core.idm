@@ -149,7 +149,7 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
         if (rowCount == 0) {
             CriteriaQuery<Role> jediCriteria = builder.createQuery(Role.class);
             Root<Role> jediRoot = jediCriteria.from(Role.class);
-            jediCriteria.select(jediRoot).where(builder.equal(jediRoot.<String>get("roleName"), "Jedi"));
+            jediCriteria.select(jediRoot).where(builder.equal(jediRoot.<String>get("name"), "Jedi"));
             TypedQuery<Role> jediQuery = em.createQuery(jediCriteria);
             try {
                 role = jediQuery.getSingleResult();
