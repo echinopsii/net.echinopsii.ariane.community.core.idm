@@ -121,9 +121,7 @@ UNLOCK TABLES;
 --
 
 LOCK TABLES `user` WRITE;
-INSERT INTO `user` VALUES
-    (1,'yoda@spectral.com','Yoda','ZeOne',
-    'UdozaWTVHt237A9JX4yhFeAjgZO5XP0dS98JeRXH6B+VH4tgLMmi7QMiQM4VwVxEBozNbxNkGMt+GN0A/QEgpw==','sG\B4\n\97;<\DBL\AE\DEM \AC\AA','09938748','yoda',1);
+INSERT INTO `user` VALUES (1,'yoda@spectral.com','Yoda','ZeOne','UdozaWTVHt237A9JX4yhFeAjgZO5XP0dS98JeRXH6B+VH4tgLMmi7QMiQM4VwVxEBozNbxNkGMt+GN0A/QEgpw==','sG´\n<97>;<ÛL®Þ^\M ¬ª','09938748','yoda',1);
 UNLOCK TABLES;
 
 
