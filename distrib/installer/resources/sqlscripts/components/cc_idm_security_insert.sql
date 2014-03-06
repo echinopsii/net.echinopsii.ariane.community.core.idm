@@ -3,12 +3,12 @@
 --
 
 LOCK TABLES `resource` WRITE;
-INSERT INTO `resource` VALUES
-    (2,'CC security resource','ccSecResource',6),
-    (3,'CC security permission','ccSecPermission',6),
-    (4,'CC security role','ccSecRole',6),
-    (5,'CC security group','ccSecGroup',6),
-    (6,'CC security user','ccSecUser',6);
+INSERT IGNORE INTO `resource` (description, resourceName, version) VALUES
+    ('CC security resource','ccSecResource',1),
+    ('CC security permission','ccSecPermission',1),
+    ('CC security role','ccSecRole',1),
+    ('CC security group','ccSecGroup',1),
+    ('CC security user','ccSecUser',1);
 UNLOCK TABLES;
 
 
@@ -17,28 +17,66 @@ UNLOCK TABLES;
 -- Dumping data for table `permission`
 --
 
-LOCK TABLES `permission` WRITE;
-INSERT INTO `permission` VALUES
-    (3,'can display CC security resource','ccSecResource:display',6,2),
-    (4,'can create CC security resource','ccSecResource:create',6,2),
-    (5,'can remove CC security resource','ccSecResource:remove',5,2),
-    (6,'can update CC security resource','ccSecResource:update',5,2),
-    (7,'can display CC security permission','ccSecPermission:display',6,3),
-    (8,'can create CC security permission','ccSecPermission:create',5,3),
-    (9,'can remove CC security permission','ccSecPermission:remove',5,3),
-    (10,'can update CC security permission','ccSecPermission:update',3,3),
-    (11,'can display CC security role','ccSecRole:display',3,4),
-    (12,'can create CC security role','ccSecRole:create',2,4),
-    (13,'can remove CC security role','ccSecRole:remove',2,4),
-    (14,'can update CC security role','ccSecRole:update',2,4),
-    (15,'can display CC security group','ccSecGroup:display',3,5),
-    (16,'can create CC security group','ccSecGroup:create',2,5),
-    (17,'can remove CC security group','ccSecGroup:remove',2,5),
-    (18,'can update CC security group','ccSecGroup:update',2,5),
-    (19,'can display CC security user','ccSecUser:display',4,6),
-    (20,'can create CC security user','ccSecUser:create',2,6),
-    (21,'can remove CC security user','ccSecUser:remove',2,6),
-    (22,'can update CC security user','ccSecUser:update',2,6);
+LOCK TABLES `permission` WRITE,`resource` WRITE;
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can display CC security resource', 'ccSecResource:display', 1, id FROM resource WHERE resourceName='ccSecResource';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can create CC security resource', 'ccSecResource:create', 1, id FROM resource WHERE resourceName='ccSecResource';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can remove CC security resource', 'ccSecResource:remove', 1, id FROM resource WHERE resourceName='ccSecResource';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can update CC security resource', 'ccSecResource:update', 1, id FROM resource WHERE resourceName='ccSecResource';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can display CC security permission', 'ccSecPermission:display', 1, id FROM resource WHERE resourceName='ccSecPermission';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can create CC security permission', 'ccSecPermission:create', 1, id FROM resource WHERE resourceName='ccSecPermission';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can remove CC security permission', 'ccSecPermission:remove', 1, id FROM resource WHERE resourceName='ccSecPermission';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can update CC security permission', 'ccSecPermission:update', 1, id FROM resource WHERE resourceName='ccSecPermission';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can display CC security role', 'ccSecRole:display', 1, id FROM resource WHERE resourceName='ccSecRole';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can create CC security role', 'ccSecRole:create', 1, id FROM resource WHERE resourceName='ccSecRole';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can remove CC security role', 'ccSecRole:remove', 1, id FROM resource WHERE resourceName='ccSecRole';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can update CC security role', 'ccSecRole:update', 1, id FROM resource WHERE resourceName='ccSecRole';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can display CC security group', 'ccSecGroup:display', 1, id FROM resource WHERE resourceName='ccSecGroup';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can create CC security group', 'ccSecGroup:create', 1, id FROM resource WHERE resourceName='ccSecGroup';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can remove CC security group', 'ccSecGroup:remove', 1, id FROM resource WHERE resourceName='ccSecGroup';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can update CC security group', 'ccSecGroup:update', 1, id FROM resource WHERE resourceName='ccSecGroup';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can display CC security user', 'ccSecUser:display', 1, id FROM resource WHERE resourceName='ccSecUser';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can create CC security user', 'ccSecUser:create', 1, id FROM resource WHERE resourceName='ccSecUser';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can remove CC security user', 'ccSecUser:remove', 1, id FROM resource WHERE resourceName='ccSecUser';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can update CC security user', 'ccSecUser:update', 1, id FROM resource WHERE resourceName='ccSecUser';
 UNLOCK TABLES;
 
 
@@ -47,13 +85,67 @@ UNLOCK TABLES;
 -- Dumping data for table `resource_permission`
 --
 
-LOCK TABLES `resource_permission` WRITE;
-INSERT INTO `resource_permission` VALUES
-    (2,3),(2,4),(2,5),(2,6),
-    (3,7),(3,8),(3,9),(3,10),
-    (4,11),(4,12),(4,13),(4,14),
-    (5,15),(5,16),(5,17),(5,18),
-    (6,19),(6,20),(6,21),(6,22);
+LOCK TABLES `resource_permission` WRITE,`permission` AS p WRITE,`resource` AS r WRITE ;
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecResource' AND p.permissionName='ccSecResource:display';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecResource' AND p.permissionName='ccSecResource:create';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecResource' AND p.permissionName='ccSecResource:remove';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecResource' AND p.permissionName='ccSecResource:update';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecPermission' AND p.permissionName='ccSecPermission:display';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecPermission' AND p.permissionName='ccSecPermission:create';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecPermission' AND p.permissionName='ccSecPermission:remove';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecPermission' AND p.permissionName='ccSecPermission:update';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecRole' AND p.permissionName='ccSecRole:display';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecRole' AND p.permissionName='ccSecRole:create';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecRole' AND p.permissionName='ccSecRole:remove';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecRole' AND p.permissionName='ccSecRole:update';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecGroup' AND p.permissionName='ccSecGroup:display';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecGroup' AND p.permissionName='ccSecGroup:create';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecGroup' AND p.permissionName='ccSecGroup:remove';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecGroup' AND p.permissionName='ccSecGroup:update';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecUser' AND p.permissionName='ccSecUser:display';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecUser' AND p.permissionName='ccSecUser:create';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecUser' AND p.permissionName='ccSecUser:remove';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecUser' AND p.permissionName='ccSecUser:update';
+
 UNLOCK TABLES;
 
 
@@ -63,10 +155,10 @@ UNLOCK TABLES;
 --
 
 LOCK TABLES `role` WRITE;
-INSERT INTO `role` VALUES
-    (1,'May the force be with you','Jedi',1),
-    (4,'CC security administrator role','ccsecadmin',31),
-    (10,'CC security reviewer role','ccsecreviewer',3);
+INSERT IGNORE INTO `role` (description, roleName, version) VALUES
+    ('May the force be with you','Jedi',1),
+    ('CC security administrator role','ccsecadmin',1),
+    ('CC security reviewer role','ccsecreviewer',1);
 UNLOCK TABLES;
 
 
@@ -76,28 +168,90 @@ UNLOCK TABLES;
 -- Dumping data for table `permission_role`
 --
 
-LOCK TABLES `permission_role` WRITE;
-INSERT INTO `permission_role` VALUES
-    (3,4),(3,10),(3,1),
-    (4,1),
-    (5,1),
-    (6,1),
-    (7,4),(7,10),(7,1),
-    (8,1),
-    (9,1),
-    (10,1),
-    (11,4),(11,10),(11,1),
-    (12,4),(12,1),
-    (13,4),(13,1),
-    (14,4),(14,1),
-    (15,4),(15,10),(15,1),
-    (16,4),(16,1),
-    (17,4),(17,1),
-    (18,4),(18,1),
-    (19,4),(19,10),(19,1),
-    (20,4),(20,1),
-    (21,4),(21,1),
-    (22,4),(22,1);
+LOCK TABLES `permission_role` WRITE,`permission` AS p WRITE,`role` AS r WRITE;
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecResource:display' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecResource:display' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecResource:display' AND r.roleName='ccsecreviewer';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecResource:create' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecResource:remove' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecResource:update' AND r.roleName='Jedi';
+
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecPermission:display' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecPermission:display' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecPermission:display' AND r.roleName='ccsecreviewer';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecPermission:create' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecPermission:remove' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecPermission:update' AND r.roleName='Jedi';
+
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:display' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:display' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:display' AND r.roleName='ccsecreviewer';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:create' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:create' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:remove' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:remove' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:update' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:update' AND r.roleName='ccsecadmin';
+
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:display' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:display' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:display' AND r.roleName='ccsecreviewer';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:create' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:create' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:remove' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:remove' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:update' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:update' AND r.roleName='ccsecadmin';
+
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:display' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:display' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:display' AND r.roleName='ccsecreviewer';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:create' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:create' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:remove' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:remove' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:update' AND r.roleName='Jedi';
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:update' AND r.roleName='ccsecadmin';
+
 UNLOCK TABLES;
 
 
@@ -106,10 +260,89 @@ UNLOCK TABLES;
 -- Dumping data for table `role_permission`
 --
 
-LOCK TABLES `role_permission` WRITE;
-INSERT INTO `role_permission` VALUES
-    (1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),
-    (1,19),(1,20),(1,21),(1,22),
-    (4,3),(4,7),(4,11),(4,12),(4,13),(4,14),(4,15),(4,16),(4,17),(4,18),(4,19),(4,20),(4,21),(4,22),
-    (10,3),(10,7),(10,11),(10,15),(10,19);
+LOCK TABLES `role_permission` WRITE,`permission` AS p WRITE,`role` AS r WRITE;
+
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecResource:display' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecResource:create' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecResource:remove' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecResource:update' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecPermission:display' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecPermission:create' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecPermission:remove' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecPermission:update' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:display' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:create' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:remove' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:update' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:display' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:create' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:remove' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:update' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:display' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:create' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:remove' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:update' AND r.roleName='Jedi';
+
+
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecResource:display' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecPermission:display' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:display' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:create' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:remove' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:update' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:display' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:create' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:remove' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:update' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:display' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:create' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:remove' AND r.roleName='ccsecadmin';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:update' AND r.roleName='ccsecadmin';
+
+
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecResource:display' AND r.roleName='ccsecreviewer';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecPermission:display' AND r.roleName='ccsecreviewer';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecRole:display' AND r.roleName='ccsecreviewer';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:display' AND r.roleName='ccsecreviewer';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:display' AND r.roleName='ccsecreviewer';
+
 UNLOCK TABLES;
