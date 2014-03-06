@@ -19,6 +19,7 @@
 
 package com.spectral.cc.core.idm.base.proxy.iPojo;
 
+import com.spectral.cc.core.idm.base.model.jpa.Role;
 import com.spectral.cc.core.idm.base.model.jpa.User;
 import com.spectral.cc.core.idm.base.proxy.IDMJPAProvider;
 import org.apache.felix.ipojo.annotations.*;
@@ -102,6 +103,7 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
         User user = null;
         EntityManager em = this.createEM();
         CriteriaBuilder builder = em.getCriteriaBuilder();
+
         CriteriaQuery<User> cmpCriteria = builder.createQuery(User.class);
         Root<User> cmpRoot = cmpCriteria.from(User.class);
         cmpCriteria.select(cmpRoot).where(builder.equal(cmpRoot.<String>get("userName"), "root"));
@@ -118,15 +120,54 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
         if (user == null) {
             em.getTransaction().begin();
             user = new User();
-            user.setUserName("root");
-            user.setFirstName("root");
-            user.setLastName("root");
-            user.setEmail("root@spectral.com");
-            user.setPhone("6969");
+            user.setUserName("yoda");
+            user.setFirstName("Yoda");
+            user.setLastName("ZeOne");
+            user.setEmail("yoda@spectral.com");
+            user.setPhone("6969696969696969");
             user.setPassword("secret");
             em.persist(user);
             em.flush();
             em.getTransaction().commit();
+        }
+    }
+
+    /**
+     * init db if no user already defined (ie : just after install) : create yoda jedi user
+     */
+    private void initDB() {
+        User user = null;
+        Role role = null;
+        EntityManager em = this.createEM();
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+
+        CriteriaQuery<Long> countCriteria = builder.createQuery(Long.class);
+        Root<User> root = countCriteria.from(User.class);
+        countCriteria = countCriteria.select(builder.count(root));
+        int rowCount = (int) (long) em.createQuery(countCriteria).getSingleResult();
+
+        if (rowCount == 0) {
+            CriteriaQuery<Role> jediCriteria = builder.createQuery(Role.class);
+            Root<Role> jediRoot = jediCriteria.from(Role.class);
+            jediCriteria.select(jediRoot).where(builder.equal(jediRoot.<String>get("roleName"), "Jedi"));
+            TypedQuery<Role> jediQuery = em.createQuery(jediCriteria);
+            try {
+                role = jediQuery.getSingleResult();
+            } catch (NoResultException e) {
+                log.warn("Jedi role has not been defined correctly ! You may have some problem during installation... ");
+                return;
+            } catch (Exception e) {
+                throw e;
+            }
+
+            user = new User().setUserNameR("yoda").setFirstNameR("Yoda").setLastNameR("ZeOne").setEmailR("yoda@spectral.com").setPhoneR("6969696969").setPasswordR("secret");
+            em.getTransaction().begin();
+            em.persist(user);
+            user.getRoles().add(role);
+            role.getUsers().add(user);
+            em.flush();
+            em.getTransaction().commit();
+            log.warn("THIS IS YOUR FIRST CC USAGE. A FAKE USER HAS BEEN CREATED WITH FULL RIGHTS (yoda / secret). YOU MUST AT LEAST CHANGE ITS PASSWORD OR CREATE NEW USER AND REMOVE THIS ONE !!!");
         }
     }
 
@@ -135,6 +176,8 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
         sharedEMF = persistenceProvider.createEntityManagerFactory(IDM_TXPERSISTENCE_PERSISTENCE_UNIT_NAME, hibernateConf);
         if (hibernateConf.get("hibernate.connection.driver_class")!=null && hibernateConf.get("hibernate.connection.driver_class").equals("org.h2.Driver"))
             initH2();
+        else
+            initDB();
     }
 
     @Validate

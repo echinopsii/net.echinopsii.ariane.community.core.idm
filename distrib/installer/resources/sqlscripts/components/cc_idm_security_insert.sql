@@ -113,18 +113,3 @@ INSERT INTO `role_permission` VALUES
     (4,3),(4,7),(4,11),(4,12),(4,13),(4,14),(4,15),(4,16),(4,17),(4,18),(4,19),(4,20),(4,21),(4,22),
     (10,3),(10,7),(10,11),(10,15),(10,19);
 UNLOCK TABLES;
-
-
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-INSERT INTO `user` VALUES (1,'yoda@spectral.com','Yoda','ZeOne','UdozaWTVHt237A9JX4yhFeAjgZO5XP0dS98JeRXH6B+VH4tgLMmi7QMiQM4VwVxEBozNbxNkGMt+GN0A/QEgpw==','sG´\n<97>;<ÛL®Þ^\M ¬ª','09938748','yoda',1);
-UNLOCK TABLES;
-
-
-LOCK TABLES `role_user` WRITE;
-INSERT INTO `role_user` VALUES (1,1);
-UNLOCK TABLES;
