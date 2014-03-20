@@ -8,7 +8,10 @@ INSERT IGNORE INTO `resource` (description, resourceName, version) VALUES
     ('CC security permission','ccSecPermission',1),
     ('CC security role','ccSecRole',1),
     ('CC security group','ccSecGroup',1),
-    ('CC security user','ccSecUser',1);
+    ('CC security user','ccSecUser',1),
+    ('CC SQL Console', 'ccSQLConsole',1),
+    ('CC Neo4J Console', 'ccNeo4JConsole',1),
+    ('CC Virgo Console', 'ccVirgoConsole',1);
 UNLOCK TABLES;
 
 
@@ -77,6 +80,15 @@ SELECT 'can remove CC security user', 'ccSecUser:remove', 1, id FROM resource WH
 
 INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
 SELECT 'can update CC security user', 'ccSecUser:update', 1, id FROM resource WHERE resourceName='ccSecUser';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can display link to CC SQL Console', 'ccSQLConsole:display', 1, id FROM resource WHERE resourceName='ccSQLConsole';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can display link to CC Neo4J Console', 'ccNeo4JConsole:display', 1, id FROM resource WHERE resourceName='ccNeo4JConsole';
+
+INSERT IGNORE INTO `permission` (description, permissionName, version, resource_id)
+SELECT 'can display link to CC Virgo Console', 'ccVirgoConsole:display', 1, id FROM resource WHERE resourceName='ccVirgoConsole';
 UNLOCK TABLES;
 
 
@@ -146,6 +158,15 @@ SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSe
 INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
 SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSecUser' AND p.permissionName='ccSecUser:update';
 
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccSQLConsole' AND p.permissionName='ccSQLConsole:display';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccNeo4JConsole' AND p.permissionName='ccNeo4JConsole:display';
+
+INSERT IGNORE INTO `resource_permission` (resource_id, permissions_id)
+SELECT r.id, p.id FROM resource AS r, permission AS p WHERE r.resourceName='ccVirgoConsole' AND p.permissionName='ccVirgoConsole:display';
+
 UNLOCK TABLES;
 
 
@@ -158,7 +179,9 @@ LOCK TABLES `role` WRITE;
 INSERT IGNORE INTO `role` (description, roleName, version) VALUES
     ('May the force be with you','Jedi',1),
     ('CC security administrator role','ccsecadmin',1),
-    ('CC security reviewer role','ccsecreviewer',1);
+    ('CC security reviewer role','ccsecreviewer',1),
+    ('CC databases administrator role','ccdbadmin',1),
+    ('CC virgo administrator role','ccvirgoadmin',1);
 UNLOCK TABLES;
 
 
@@ -252,6 +275,24 @@ SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecU
 INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
 SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:update' AND r.roleName='ccsecadmin';
 
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSQLConsole:display' AND r.roleName='Jedi';
+
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccSQLConsole:display' AND r.roleName='ccdbadmin';
+
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccNeo4JConsole:display' AND r.roleName='Jedi';
+
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccNeo4JConsole:display' AND r.roleName='ccdbadmin';
+
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccVirgoConsole:display' AND r.roleName='Jedi';
+
+INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='ccVirgoConsole:display' AND r.roleName='ccvirgoadmin';
+
 UNLOCK TABLES;
 
 
@@ -302,7 +343,12 @@ INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
 SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:remove' AND r.roleName='Jedi';
 INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
 SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:update' AND r.roleName='Jedi';
-
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSQLConsole:display' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccNeo4JConsole:display' AND r.roleName='Jedi';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccVirgoConsole:display' AND r.roleName='Jedi';
 
 INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
 SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecResource:display' AND r.roleName='ccsecadmin';
@@ -345,4 +391,10 @@ SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecG
 INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
 SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:display' AND r.roleName='ccsecreviewer';
 
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSQLConsole:display' AND r.roleName='ccdbadmin';
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccNeo4JConsole:display' AND r.roleName='ccdbadmin';
+
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccVirgoConsole:display' AND r.roleName='ccvirgoadmin';
 UNLOCK TABLES;
