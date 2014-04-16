@@ -349,7 +349,6 @@ INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
 SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccNeo4JConsole:display' AND r.roleName='Jedi';
 INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
 SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccVirgoConsole:display' AND r.roleName='Jedi';
-
 INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
 SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecResource:display' AND r.roleName='ccsecadmin';
 INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
@@ -390,11 +389,10 @@ INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
 SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecGroup:display' AND r.roleName='ccsecreviewer';
 INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
 SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSecUser:display' AND r.roleName='ccsecreviewer';
-
+INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
 SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccSQLConsole:display' AND r.roleName='ccdbadmin';
 INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
 SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccNeo4JConsole:display' AND r.roleName='ccdbadmin';
-
 INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
 SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='ccVirgoConsole:display' AND r.roleName='ccvirgoadmin';
 UNLOCK TABLES;
