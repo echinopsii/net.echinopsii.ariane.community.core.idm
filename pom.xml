@@ -5,7 +5,7 @@
     <!-- General information -->
     <groupId>com.spectral.cc.core</groupId>
     <artifactId>com.spectral.cc.core.idm</artifactId>
-    <version>0.2.0.RELEASE</version>
+    <version>0.3.0-SNAPSHOT</version>
     <name>CC Core IDM Parent</name>
     <packaging>pom</packaging>
 
