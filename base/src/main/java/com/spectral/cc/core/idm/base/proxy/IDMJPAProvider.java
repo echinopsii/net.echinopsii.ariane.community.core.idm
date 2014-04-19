@@ -1,5 +1,5 @@
 /**
- * IDM commons services
+ * IDM base bundle
  * JPA provider Interface
  * Copyright (C) 31/12/13 mffrench
  *

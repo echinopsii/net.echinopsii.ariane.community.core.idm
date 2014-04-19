@@ -1,5 +1,5 @@
 /**
- * IDM Commons Services bundle
+ * IDM base bundle
  * Web Security Manager Proxy iPojo impl
  * Copyright (C) 2013 Mathilde Ffrench
  *

@@ -1,5 +1,5 @@
 /**
- * IDM Commons Services bundle
+ * IDM base bundle
  * User Preference JPA impl
  * Copyright (C) 2014 Mathilde Ffrench
  *

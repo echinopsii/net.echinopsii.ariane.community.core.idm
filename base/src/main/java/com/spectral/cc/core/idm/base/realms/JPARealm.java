@@ -1,5 +1,5 @@
 /**
- * IDM Commons Services bundle
+ * IDM base bundle
  * JPA Shiro Realm
  * Copyright (C) 2013 Mathilde Ffrench
  *

@@ -1,5 +1,5 @@
 /**
- * IDM Commons Services bundle
+ * IDM base bundle
  * Permission JPA impl
  * Copyright (C) 2014 Mathilde Ffrench
  *
