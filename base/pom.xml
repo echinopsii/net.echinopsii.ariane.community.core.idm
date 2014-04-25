@@ -76,6 +76,7 @@
                             org.apache.shiro.web.tags;version="${version.org.apache.shiro}",
                             org.h2;resolution:=optional,
                             org.mariadb.jdbc;resolution:=optional,
+                            org.hibernate.annotations;version="[${version.osgimin.hibernate},${version.osgimax.hibernate})",
                             org.hibernate.proxy;version="[${version.osgimin.hibernate},${version.osgimax.hibernate})",
                             org.hibernate.jpa;version="[${version.osgimin.hibernate},${version.osgimax.hibernate})",
                             org.hibernate.jpa.boot.internal;version="[${version.osgimin.hibernate},${version.osgimax.hibernate})",

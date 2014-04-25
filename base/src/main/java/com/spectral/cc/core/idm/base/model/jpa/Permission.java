@@ -20,8 +20,12 @@
 package com.spectral.cc.core.idm.base.model.jpa;
 
 import com.spectral.cc.core.idm.base.model.IPermission;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -29,6 +33,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "CC_IDM_Hibernate2LC_PERMISSION")
 @XmlRootElement
 @Table(name="permission", uniqueConstraints = @UniqueConstraint(columnNames = {"permissionName"}))
 public class Permission implements IPermission<Resource>, Serializable {
@@ -49,11 +55,14 @@ public class Permission implements IPermission<Resource>, Serializable {
     @Column
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
+    @Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "CC_IDM_Hibernate2LC_PERMISSION.RESOURCES")
     private Resource resource;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_PERMISSION.ROLES")
     private Set<Role> roles = new HashSet<Role>();
 
     public Long getId() {

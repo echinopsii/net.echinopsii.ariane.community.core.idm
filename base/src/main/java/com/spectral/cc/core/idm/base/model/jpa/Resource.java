@@ -20,8 +20,12 @@
 package com.spectral.cc.core.idm.base.model.jpa;
 
 import com.spectral.cc.core.idm.base.model.IResource;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -29,6 +33,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "CC_IDM_Hibernate2LC_RESOURCE")
 @XmlRootElement
 @Table(name="resource", uniqueConstraints = @UniqueConstraint(columnNames = {"resourceName"}))
 public class Resource implements IResource<Permission>, Serializable {
@@ -49,7 +55,9 @@ public class Resource implements IResource<Permission>, Serializable {
     @Column
     private String description;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
+    @Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "CC_IDM_Hibernate2LC_RESOURCE.PERMISSIONS")
     private Set<Permission> permissions = new HashSet<Permission>();
 
     public Long getId() {

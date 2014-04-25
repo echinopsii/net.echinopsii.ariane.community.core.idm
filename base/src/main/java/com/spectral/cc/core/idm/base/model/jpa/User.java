@@ -24,6 +24,10 @@ import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Sha512Hash;
 import org.apache.shiro.util.ByteSource;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -34,6 +38,8 @@ import java.util.Set;
 
 
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_USER")
 @XmlRootElement
 @Table(name="user", uniqueConstraints = @UniqueConstraint(columnNames = {"userEmail","userName"}))
 public class User implements IUser<Group, Role>, Serializable {
@@ -75,13 +81,19 @@ public class User implements IUser<Group, Role>, Serializable {
     @NotNull
     private String phone;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_USER.GROUPS")
     private Set<Group> groups = new HashSet<Group>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_USER.ROLES")
     private Set<Role> roles = new HashSet<Role>();
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_USER.PREFERENCES")
     private Set<UserPreference> preferences = new HashSet<UserPreference>();
 
     public Long getId() {

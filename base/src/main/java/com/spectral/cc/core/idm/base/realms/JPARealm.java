@@ -74,6 +74,7 @@ public abstract class JPARealm  extends AuthorizingRealm {
         Root<User> cmpRoot = cmpCriteria.from(User.class);
         cmpCriteria.select(cmpRoot).where(builder.equal(cmpRoot.<String>get("userName"), username));
         TypedQuery<User> cmpQuery = em.createQuery(cmpCriteria);
+        cmpQuery.setHint("org.hibernate.cacheable", true);
         try {
             user = cmpQuery.getSingleResult();
         } catch (NoResultException e) {
@@ -129,6 +130,7 @@ public abstract class JPARealm  extends AuthorizingRealm {
         Root<User> cmpRoot = cmpCriteria.from(User.class);
         cmpCriteria.select(cmpRoot).where(builder.equal(cmpRoot.<String>get("userName"), username));
         TypedQuery<User> cmpQuery = em.createQuery(cmpCriteria);
+        cmpQuery.setHint("org.hibernate.cacheable", true);
         try {
             user = cmpQuery.getSingleResult();
             log.debug("User {} found !", user.getUserName());

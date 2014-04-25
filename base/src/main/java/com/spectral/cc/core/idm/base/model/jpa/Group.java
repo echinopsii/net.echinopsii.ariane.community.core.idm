@@ -20,8 +20,12 @@
 package com.spectral.cc.core.idm.base.model.jpa;
 
 import com.spectral.cc.core.idm.base.model.IGroup;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -29,6 +33,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_GROUP")
 @XmlRootElement
 @Table(name="ccGroup", uniqueConstraints = @UniqueConstraint(columnNames = {"groupName"}))
 public class Group implements IGroup, Serializable {
@@ -49,10 +55,14 @@ public class Group implements IGroup, Serializable {
     @Column
     private String description;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_GROUP.USERS")
     private Set<User> users = new HashSet<User>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_GROUP.ROLES")
     private Set<Role> roles = new HashSet<Role>();
 
     public Long getId() {

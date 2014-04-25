@@ -19,12 +19,19 @@
 
 package com.spectral.cc.core.idm.base.model.jpa;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_USERPREFERENCE")
 @XmlRootElement
 @Table(name="preference")
 public class UserPreference implements Serializable {
@@ -46,7 +53,8 @@ public class UserPreference implements Serializable {
     @NotNull
     private String pvalue;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_USERPREFERENCE.USER")
     @NotNull
     private User user;
 

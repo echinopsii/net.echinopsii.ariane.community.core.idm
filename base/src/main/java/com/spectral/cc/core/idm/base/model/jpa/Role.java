@@ -20,8 +20,12 @@
 package com.spectral.cc.core.idm.base.model.jpa;
 
 import com.spectral.cc.core.idm.base.model.IRole;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -30,6 +34,8 @@ import java.util.Set;
 
 
 @Entity
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_ROLE")
 @XmlRootElement
 @Table(name="role", uniqueConstraints = @UniqueConstraint(columnNames = {"roleName"}))
 public class Role implements IRole<Permission>, Serializable {
@@ -50,13 +56,19 @@ public class Role implements IRole<Permission>, Serializable {
     @Column
     private String description;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_ROLE.PERMISSIONS")
     private Set<Permission> permissions = new HashSet<Permission>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_ROLE.USERS")
     private Set<User> users = new HashSet<User>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_ROLE.GROUPS")
     private Set<Group> groups = new HashSet<Group>();
 
     public Long getId() {
