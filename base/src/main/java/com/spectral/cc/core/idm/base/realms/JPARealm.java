@@ -31,6 +31,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.hibernate.FlushMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,6 +75,8 @@ public abstract class JPARealm  extends AuthorizingRealm {
         Root<User> cmpRoot = cmpCriteria.from(User.class);
         cmpCriteria.select(cmpRoot).where(builder.equal(cmpRoot.<String>get("userName"), username));
         TypedQuery<User> cmpQuery = em.createQuery(cmpCriteria);
+        cmpQuery.setHint("org.hibernate.readOnly", true);
+        cmpQuery.setHint("org.hibernate.flushMode", FlushMode.MANUAL);
         cmpQuery.setHint("org.hibernate.cacheable", true);
         try {
             user = cmpQuery.getSingleResult();
@@ -130,6 +133,8 @@ public abstract class JPARealm  extends AuthorizingRealm {
         Root<User> cmpRoot = cmpCriteria.from(User.class);
         cmpCriteria.select(cmpRoot).where(builder.equal(cmpRoot.<String>get("userName"), username));
         TypedQuery<User> cmpQuery = em.createQuery(cmpCriteria);
+        cmpQuery.setHint("org.hibernate.readOnly", true);
+        cmpQuery.setHint("org.hibernate.flushMode", FlushMode.MANUAL);
         cmpQuery.setHint("org.hibernate.cacheable", true);
         try {
             user = cmpQuery.getSingleResult();
@@ -144,11 +149,12 @@ public abstract class JPARealm  extends AuthorizingRealm {
             throw new AuthenticationException("A problem occured while getting user account with " + username + " in this realm : " + e.getMessage());
         }
 
+        info = new SimpleAuthenticationInfo(username, user.getPassword().toCharArray(), getName());
+        info.setCredentialsSalt(ByteSource.Util.bytes(user.getPasswordSalt()));
+
         log.debug("Close entity manager ...");
         em.close();
 
-        info = new SimpleAuthenticationInfo(username, user.getPassword().toCharArray(), getName());
-        info.setCredentialsSalt(ByteSource.Util.bytes(user.getPasswordSalt()));
         return info;
     }
 }

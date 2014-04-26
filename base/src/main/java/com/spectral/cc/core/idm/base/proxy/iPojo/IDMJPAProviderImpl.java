@@ -23,6 +23,7 @@ import com.spectral.cc.core.idm.base.model.jpa.Role;
 import com.spectral.cc.core.idm.base.model.jpa.User;
 import com.spectral.cc.core.idm.base.proxy.IDMJPAProvider;
 import org.apache.felix.ipojo.annotations.*;
+import org.hibernate.FlushMode;
 import org.hibernate.osgi.HibernateOSGiService;
 import org.hibernate.osgi.OsgiScanner;
 import org.osgi.framework.Bundle;
@@ -245,6 +246,12 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
                                              (Thread.currentThread().getStackTrace().length>6) ? Thread.currentThread().getStackTrace()[6].getClassName() : ""
                          });
         return sharedEMF.createEntityManager();
+    }
+
+    @Override
+    public TypedQuery<?> setFlushModeManual(TypedQuery<?> query) {
+        query.setHint("org.hibernate.flushMode", FlushMode.MANUAL);
+        return query;
     }
 
     public void addSubPersistenceBundle(Bundle persistenceBundle) {
