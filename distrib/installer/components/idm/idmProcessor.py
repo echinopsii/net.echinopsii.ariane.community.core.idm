@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
+from components.idm.cuIDMCache import idmCacheSyringe
+from components.idm.cuIDMCacheJGroups import idmCacheJGroupsSyringe
 from components.idm.cuIDMJPAProviderManagedService import idmJPAProviderManagedServiceSyringe
 from components.idm.dbIDMMySQLInitiator import dbIDMMySQLInitiator
 from components.idm.dbIDMMySQLPopulator import dbIDMMySQLPopulator
@@ -29,16 +31,25 @@ class idmProcessor:
         print("%-- CC idm configuration : \n")
         self.silent = silent
         self.homeDirPath = homeDirPath
+        idmCacheDirPath = self.homeDirPath + "/CC/cache/component/idm/"
+        if not os.path.exists(idmCacheDirPath):
+            os.makedirs(idmCacheDirPath, 0o755)
         kernelRepositoryDirPath = self.homeDirPath + "/repository/cc-distrib/"
         if not os.path.exists(kernelRepositoryDirPath):
             os.makedirs(kernelRepositoryDirPath, 0o755)
-        self.idmJPAProviderSyringe = idmJPAProviderManagedServiceSyringe(kernelRepositoryDirPath, silent)
+        self.idmCacheJGroupsSyringe = idmCacheJGroupsSyringe(idmCacheDirPath, silent)
+        self.idmCacheJGroupsSyringe.shootBuilder()
+        self.idmCacheSyringe = idmCacheSyringe(idmCacheDirPath)
+        self.idmCacheSyringe.shootBuilder()
+        self.idmJPAProviderSyringe = idmJPAProviderManagedServiceSyringe(kernelRepositoryDirPath, idmCacheDirPath, silent)
         self.idmJPAProviderSyringe.shootBuilder()
         self.idmDBConfig = self.idmJPAProviderSyringe.getDBConfigFromShoot()
         self.idmSQLInitiator = dbIDMMySQLInitiator(self.idmDBConfig)
         self.idmSQLPopulator = dbIDMMySQLPopulator(self.idmDBConfig)
 
     def process(self):
+        self.idmCacheJGroupsSyringe.inject()
+        self.idmCacheSyringe.inject()
         self.idmJPAProviderSyringe.inject()
         self.idmSQLInitiator.process()
         self.idmSQLPopulator.process()

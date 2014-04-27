@@ -75,6 +75,16 @@ class cpHibernateDriverClass(AConfParamNotNone):
         self.value = None
 
 
+class cpHibernateCacheInfinispanCfg(AConfParamNotNone):
+
+    name = "##hibernateCacheInfinispanCfg"
+    description = "CC idm hibernate L2 cache infinispan config"
+    hide = False
+
+    def __init__(self):
+        self.value = None
+
+
 class cuIDMJPAProviderManagedServiceProcessor(AConfUnit):
 
     def __init__(self, targetConfDir):
@@ -86,26 +96,30 @@ class cuIDMJPAProviderManagedServiceProcessor(AConfUnit):
         hibernateConnectionURL = cpHibernateConnectionURL()
         hibernateConnectionUsername = cpHibernateConnectionUsername()
         hibernateConnectionPassword = cpHibernateConnectionPassword()
+        hibernateCacheInfinispanCfg = cpHibernateCacheInfinispanCfg()
         self.paramsDictionary = {
             hibernateDriverClass.name: hibernateDriverClass,
             hibernateDialect.name: hibernateDialect,
             hibernateConnectionURL.name: hibernateConnectionURL,
             hibernateConnectionUsername.name: hibernateConnectionUsername,
             hibernateConnectionPassword.name: hibernateConnectionPassword,
+            hibernateCacheInfinispanCfg.name: hibernateCacheInfinispanCfg
         }
 
 
 class idmJPAProviderManagedServiceSyringe:
 
-    def __init__(self, targetConfDif, silent):
+    def __init__(self, targetConfDif, cacheDir, silent):
         self.silent = silent
         self.idmJPAProviderManagedServiceCUProcessor = cuIDMJPAProviderManagedServiceProcessor(targetConfDif)
         idmJPAProviderManagedServiceCUJSON = open("resources/configvalues/components/cuIDMJPAProviderManagedService.json")
         self.idmJPAProviderManagedServiceCUValues = json.load(idmJPAProviderManagedServiceCUJSON)
         idmJPAProviderManagedServiceCUJSON.close()
+        self.cacheConfPath = cacheDir + "infinispan.idm.cache.xml"
         self.dbConfig = None
 
     def shootBuilder(self):
+        idmJPAProviderCacheInfinispanCfgDefined = False
         idmJPAProviderManagedServiceDBTypeDefined = False
         idmJPAProviderManagedServiceConnectionDefined = False
         for key in self.idmJPAProviderManagedServiceCUProcessor.getParamsKeysList():
@@ -114,6 +128,10 @@ class idmJPAProviderManagedServiceSyringe:
                 self.idmJPAProviderManagedServiceCUProcessor.setKeyParamValue(cpHibernateDriverClass.name, self.idmJPAProviderManagedServiceCUValues[cpHibernateDriverClass.name])
                 self.idmJPAProviderManagedServiceCUProcessor.setKeyParamValue(cpHibernateDialect.name, self.idmJPAProviderManagedServiceCUValues[cpHibernateDialect.name])
                 idmJPAProviderManagedServiceDBTypeDefined = True
+
+            elif (key == cpHibernateCacheInfinispanCfg.name) and not idmJPAProviderCacheInfinispanCfgDefined:
+                self.idmJPAProviderManagedServiceCUProcessor.setKeyParamValue(cpHibernateCacheInfinispanCfg.name, self.cacheConfPath)
+                idmJPAProviderCacheInfinispanCfgDefined = True
 
             elif (key == cpHibernateConnectionURL.name or key == cpHibernateConnectionUsername.name or key == cpHibernateConnectionPassword.name) and not idmJPAProviderManagedServiceConnectionDefined:
 

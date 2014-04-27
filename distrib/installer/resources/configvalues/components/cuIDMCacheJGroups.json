@@ -1,0 +1,5 @@
+{
+    "##JGroupsTCPBindAddress": "127.0.0.1",
+    "##JGroupsTCPBindPort": "7800",
+    "##JGroupsMPINGBindAddress": "127.0.0.1"
+}
