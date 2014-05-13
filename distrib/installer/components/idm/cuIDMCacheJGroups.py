@@ -125,6 +125,8 @@ class idmCacheJGroupsSyringe:
                     self.idmCacheJGroupsCUValues[cpJGroupsTCPBindPort.name] = tcpBindPortStr
                     idmCacheTCPBindPortDefault = self.idmCacheJGroupsCUValues[cpJGroupsTCPBindPort.name]
                     idmCacheTCPBindPortDefaultUI = "[default - "+idmCacheTCPBindPortDefault+"]"
+                else:
+                    print("%-- !! Selected port " + tcpBindPortStr  +  " is already used on this OS ! Choose another one !")
 
             idmCacheJGroupsMPINGBindingAddressValid = False
             while not idmCacheJGroupsMPINGBindingAddressValid:
