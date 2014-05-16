@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infinispan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="urn:infinispan:config:6.0"
+            xsi:schemaLocation="urn:infinispan:config:6.0 http://www.infinispan.org/schemas/infinispan-config-6.0.xsd">
+   <global>
+      <globalJmxStatistics enabled="true" cacheManagerName="CC_IDM"/>
+   </global>
+
+   <namedCache name="cc.core.idm.cache.user">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+      <expiration maxIdle="3600000" wakeUpInterval="5000"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.user.groups">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+      <expiration maxIdle="3600000" wakeUpInterval="5000"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.user.roles">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+      <expiration maxIdle="3600000" wakeUpInterval="5000"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.user.preferences">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+      <expiration maxIdle="3600000" wakeUpInterval="5000"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.userpreference">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+      <expiration maxIdle="3600000" wakeUpInterval="5000"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.userpreference.user">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+      <expiration maxIdle="3600000" wakeUpInterval="5000"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.group">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.group.users">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.group.roles">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.role">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.role.permissions">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.role.users">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.role.groups">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.permission">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.permission.resources">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.permission.roles">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.resource">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+   </namedCache>
+
+   <namedCache name="cc.core.idm.cache.resource.permissions">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <eviction maxEntries="10000" strategy="LRU"/>
+   </namedCache>
+
+   <!-- A config appropriate for query caching. Does not replicate queries. -->
+   <namedCache name="cc.core.idm.cache.queries">
+      <locking isolationLevel="READ_COMMITTED" concurrencyLevel="1000"
+               lockAcquisitionTimeout="15000" useLockStriping="false"/>
+      <!--Eviction configuration.  WakeupInterval defines how often the eviction thread runs, in milliseconds.  0 means
+                    the eviction thread will never run.  A separate executor is used for eviction in each cache. -->
+      <eviction maxEntries="10000" strategy="LRU"/>
+      <expiration maxIdle="100000" wakeUpInterval="5000"/>
+      <transaction transactionMode="NON_TRANSACTIONAL"/>
+      <!--
+      <transaction transactionManagerLookupClass="org.infinispan.transaction.lookup.GenericTransactionManagerLookup"
+                   transactionMode="TRANSACTIONAL" autoCommit="false"
+                   lockingMode="OPTIMISTIC"/>
+      -->
+   </namedCache>
+
+</infinispan>
