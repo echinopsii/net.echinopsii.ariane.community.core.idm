@@ -34,7 +34,7 @@ import java.util.Set;
 
 @Entity
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_PERMISSION")
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.permission")
 @XmlRootElement
 @Table(name="permission", uniqueConstraints = @UniqueConstraint(columnNames = {"permissionName"}))
 public class Permission implements IPermission<Resource>, Serializable {
@@ -57,12 +57,12 @@ public class Permission implements IPermission<Resource>, Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_PERMISSION.RESOURCES")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.permission.resources")
     private Resource resource;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_PERMISSION.ROLES")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.permission.roles")
     private Set<Role> roles = new HashSet<Role>();
 
     public Long getId() {

@@ -34,7 +34,7 @@ import java.util.Set;
 
 @Entity
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_RESOURCE")
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.resource")
 @XmlRootElement
 @Table(name="resource", uniqueConstraints = @UniqueConstraint(columnNames = {"resourceName"}))
 public class Resource implements IResource<Permission>, Serializable {
@@ -57,7 +57,7 @@ public class Resource implements IResource<Permission>, Serializable {
 
     @OneToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_RESOURCE.PERMISSIONS")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.resource.permissions")
     private Set<Permission> permissions = new HashSet<Permission>();
 
     public Long getId() {

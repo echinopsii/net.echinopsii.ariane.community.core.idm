@@ -34,7 +34,7 @@ import java.util.Set;
 
 @Entity
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_GROUP")
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.group")
 @XmlRootElement
 @Table(name="ccGroup", uniqueConstraints = @UniqueConstraint(columnNames = {"groupName"}))
 public class Group implements IGroup, Serializable {
@@ -57,12 +57,12 @@ public class Group implements IGroup, Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_GROUP.USERS")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.group.users")
     private Set<User> users = new HashSet<User>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_GROUP.ROLES")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.group.roles")
     private Set<Role> roles = new HashSet<Role>();
 
     public Long getId() {

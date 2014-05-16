@@ -35,7 +35,7 @@ import java.util.Set;
 
 @Entity
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_ROLE")
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.role")
 @XmlRootElement
 @Table(name="role", uniqueConstraints = @UniqueConstraint(columnNames = {"roleName"}))
 public class Role implements IRole<Permission>, Serializable {
@@ -58,17 +58,17 @@ public class Role implements IRole<Permission>, Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_ROLE.PERMISSIONS")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.role.permissions")
     private Set<Permission> permissions = new HashSet<Permission>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_ROLE.USERS")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.role.users")
     private Set<User> users = new HashSet<User>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_ROLE.GROUPS")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.role.groups")
     private Set<Group> groups = new HashSet<Group>();
 
     public Long getId() {

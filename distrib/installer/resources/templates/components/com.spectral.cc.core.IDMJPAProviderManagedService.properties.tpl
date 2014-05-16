@@ -12,4 +12,4 @@ hibernate.c3p0.idle_test_period=100
 hibernate.cache.use_second_level_cache=true
 hibernate.cache.use_query_cache=true
 hibernate.cache.region.factory_class=org.hibernate.cache.infinispan.InfinispanRegionFactory
-hibernate.cache.infinispan.cfg=##hibernateCacheInfinispanCfg
+hibernate.cache.infinispan.cfg=infinispan.idm.cache.xml

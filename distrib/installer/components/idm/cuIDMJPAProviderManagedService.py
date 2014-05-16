@@ -96,26 +96,23 @@ class cuIDMJPAProviderManagedServiceProcessor(AConfUnit):
         hibernateConnectionURL = cpHibernateConnectionURL()
         hibernateConnectionUsername = cpHibernateConnectionUsername()
         hibernateConnectionPassword = cpHibernateConnectionPassword()
-        hibernateCacheInfinispanCfg = cpHibernateCacheInfinispanCfg()
         self.paramsDictionary = {
             hibernateDriverClass.name: hibernateDriverClass,
             hibernateDialect.name: hibernateDialect,
             hibernateConnectionURL.name: hibernateConnectionURL,
             hibernateConnectionUsername.name: hibernateConnectionUsername,
-            hibernateConnectionPassword.name: hibernateConnectionPassword,
-            hibernateCacheInfinispanCfg.name: hibernateCacheInfinispanCfg
+            hibernateConnectionPassword.name: hibernateConnectionPassword
         }
 
 
 class idmJPAProviderManagedServiceSyringe:
 
-    def __init__(self, targetConfDif, cacheDir, silent):
+    def __init__(self, targetConfDif, silent):
         self.silent = silent
         self.idmJPAProviderManagedServiceCUProcessor = cuIDMJPAProviderManagedServiceProcessor(targetConfDif)
         idmJPAProviderManagedServiceCUJSON = open("resources/configvalues/components/cuIDMJPAProviderManagedService.json")
         self.idmJPAProviderManagedServiceCUValues = json.load(idmJPAProviderManagedServiceCUJSON)
         idmJPAProviderManagedServiceCUJSON.close()
-        self.cacheConfPath = cacheDir + "infinispan.idm.cache.xml"
         self.dbConfig = None
 
     def shootBuilder(self):

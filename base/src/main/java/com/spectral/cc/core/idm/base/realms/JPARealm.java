@@ -78,6 +78,7 @@ public abstract class JPARealm  extends AuthorizingRealm {
         cmpQuery.setHint("org.hibernate.readOnly", true);
         cmpQuery.setHint("org.hibernate.flushMode", FlushMode.MANUAL);
         cmpQuery.setHint("org.hibernate.cacheable", true);
+        cmpQuery.setHint("org.hibernate.cacheRegion", "cc.core.idm.cache.queries");
         try {
             user = cmpQuery.getSingleResult();
         } catch (NoResultException e) {
@@ -136,6 +137,7 @@ public abstract class JPARealm  extends AuthorizingRealm {
         cmpQuery.setHint("org.hibernate.readOnly", true);
         cmpQuery.setHint("org.hibernate.flushMode", FlushMode.MANUAL);
         cmpQuery.setHint("org.hibernate.cacheable", true);
+        cmpQuery.setHint("org.hibernate.cacheRegion", "cc.core.idm.cache.queries");
         try {
             user = cmpQuery.getSingleResult();
             log.debug("User {} found !", user.getUserName());

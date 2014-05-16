@@ -39,7 +39,7 @@ import java.util.Set;
 
 @Entity
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_USER")
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.user")
 @XmlRootElement
 @Table(name="user", uniqueConstraints = @UniqueConstraint(columnNames = {"userEmail","userName"}))
 public class User implements IUser<Group, Role>, Serializable {
@@ -83,17 +83,17 @@ public class User implements IUser<Group, Role>, Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_USER.GROUPS")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.user.groups")
     private Set<Group> groups = new HashSet<Group>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_USER.ROLES")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.user.roles")
     private Set<Role> roles = new HashSet<Role>();
 
     @OneToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_USER.PREFERENCES")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.user.preferences")
     private Set<UserPreference> preferences = new HashSet<UserPreference>();
 
     public Long getId() {

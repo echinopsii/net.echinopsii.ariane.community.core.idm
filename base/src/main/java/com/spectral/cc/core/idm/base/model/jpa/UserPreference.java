@@ -31,7 +31,7 @@ import java.io.Serializable;
 
 @Entity
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_USERPREFERENCE")
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.userpreference")
 @XmlRootElement
 @Table(name="preference")
 public class UserPreference implements Serializable {
@@ -54,7 +54,7 @@ public class UserPreference implements Serializable {
     private String pvalue;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "CC_IDM_Hibernate2LC_USERPREFERENCE.USER")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.userpreference.user")
     @NotNull
     private User user;
 
