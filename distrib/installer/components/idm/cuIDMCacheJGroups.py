@@ -33,6 +33,16 @@ class cpJGroupsTCPBindAddress(AConfParamNotNone):
         self.value = None
 
 
+class cpJGroupsTCPBindPort(AConfParamNotNone):
+
+    name = "##JGroupsTCPBindPort"
+    description = "CC IDM JGroups TCP bind port"
+    hide = False
+
+    def __init__(self):
+        self.value = None
+
+
 class cpJGroupsMPINGBindAddress(AConfParamNotNone):
 
     name = "##JGroupsMPINGBindAddress"
@@ -43,10 +53,20 @@ class cpJGroupsMPINGBindAddress(AConfParamNotNone):
         self.value = None
 
 
-class cpJGroupsTCPBindPort(AConfParamNotNone):
+class cpJGroupsMPINGMulticastAddress(AConfParamNotNone):
 
-    name = "##JGroupsTCPBindPort"
-    description = "CC IDM JGroups TCP bind port"
+    name = "##JGroupsMPINGMulticastAddress"
+    description = "CC IDM JGroups MPING multicast address"
+    hide = False
+
+    def __init__(self):
+        self.value = None
+
+
+class cpJGroupsMPINGMulticastPort(AConfParamNotNone):
+
+    name = "##JGroupsMPINGMulticastPort"
+    description = "CC IDM JGroups MPING multicast port"
     hide = False
 
     def __init__(self):
@@ -62,10 +82,14 @@ class cuIDMCacheJGroupsProcessor(AConfUnit):
         JGroupsTCPBindAddress = cpJGroupsTCPBindAddress()
         JGroupsTCPBindPort = cpJGroupsTCPBindPort()
         JGroupsMPINGBindAddress = cpJGroupsMPINGBindAddress()
+        JGroupsMPINGMulticastAddress = cpJGroupsMPINGMulticastAddress()
+        JGroupsMPINGMulticastPort = cpJGroupsMPINGMulticastPort()
         self.paramsDictionary = {
             JGroupsTCPBindAddress.name: JGroupsTCPBindAddress,
             JGroupsTCPBindPort.name: JGroupsTCPBindPort,
-            JGroupsMPINGBindAddress.name: JGroupsMPINGBindAddress
+            JGroupsMPINGBindAddress.name: JGroupsMPINGBindAddress,
+            JGroupsMPINGMulticastAddress.name: JGroupsMPINGMulticastAddress,
+            JGroupsMPINGMulticastPort.name: JGroupsMPINGMulticastPort
         }
 
 
@@ -88,6 +112,12 @@ class idmCacheJGroupsSyringe:
 
         idmCacheMPINGBindAddressDefault = self.idmCacheJGroupsCUValues[cpJGroupsMPINGBindAddress.name]
         idmCacheMPINGBindAddressDefaultUI = "[default - "+idmCacheMPINGBindAddressDefault+"]"
+
+        idmCacheMPINGMulticastAddressDefault = self.idmCacheJGroupsCUValues[cpJGroupsMPINGMulticastAddress.name]
+        idmCacheMPINGMulticastAddressDefaultUI = "[default - " + idmCacheMPINGMulticastAddressDefault + "]"
+
+        idmCacheMPINGMulticastPortDefault = self.idmCacheJGroupsCUValues[cpJGroupsMPINGMulticastPort.name]
+        idmCacheMPINGMulticastPortDefaultUI = "[default - " + idmCacheMPINGMulticastPortDefault + "]"
 
         availabeIPAddresses = getSystemNetworkInterfacesAndIPaddresses()
 
@@ -142,14 +172,51 @@ class idmCacheJGroupsSyringe:
                     idmCacheJGroupsMPINGBindingAddressValid = True
                     self.idmCacheJGroupsCUValues[cpJGroupsMPINGBindAddress.name] = idmCacheMPINGBindAddressDefault
 
+            idmCacheJGroupsMPINGMulticastAddressValid = False
+            while not idmCacheJGroupsMPINGMulticastAddressValid:
+                self.idmCacheJGroupsCUValues[cpJGroupsMPINGMulticastAddress.name] = input("%-- >> Define CC idm cache MPING multicast address " + idmCacheMPINGMulticastAddressDefaultUI + ": ")
+
+                if self.idmCacheJGroupsCUValues[cpJGroupsMPINGMulticastAddress.name] != "":
+                    idmCacheJGroupsMPINGMulticastAddressValid = True
+                    idmCacheMPINGMulticastAddressDefault = self.idmCacheJGroupsCUValues[cpJGroupsMPINGMulticastAddress.name]
+                    idmCacheMPINGMulticastAddressDefaultUI = "[default - "+idmCacheMPINGMulticastAddressDefault+"]"
+                elif idmCacheMPINGMulticastAddressDefault != "":
+                    idmCacheJGroupsMPINGMulticastAddressValid = True
+                    self.idmCacheJGroupsCUValues[cpJGroupsMPINGMulticastAddress.name] = idmCacheMPINGMulticastAddressDefault
+
+            idmCacheJGroupsMPINGMulticastPortValid = False
+            while not idmCacheJGroupsMPINGMulticastPortValid:
+                multicastPort = 0
+                multicastPortStr = input("%-- >> Define CC idm cache MPING multicast port " + idmCacheMPINGMulticastPortDefaultUI + ": ")
+
+                if multicastPortStr is not None and multicastPortStr != "":
+                    multicastPort = int(multicastPortStr)
+                elif idmCacheMPINGMulticastPortDefault != "":
+                    multicastPort = int(idmCacheMPINGMulticastPortDefault)
+                    multicastPortStr = idmCacheMPINGMulticastPortDefault
+
+                if (multicastPort <= 0) and (multicastPort > 65535):
+                    print("%-- !! Invalid JGroups multicast port " + multicastPortStr + ": not in port range")
+                elif isPortAvailable(self.idmCacheJGroupsCUValues[cpJGroupsTCPBindPort.name], multicastPort):
+                    idmCacheJGroupsMPINGMulticastPortValid = True
+                    self.idmCacheJGroupsCUValues[cpJGroupsMPINGMulticastPort.name] = multicastPortStr
+                    idmCacheMPINGMulticastPortDefault = self.idmCacheJGroupsCUValues[cpJGroupsMPINGMulticastPort.name]
+                    idmCacheMPINGMulticastPortDefaultUI = "[default - "+idmCacheMPINGMulticastPortDefault+"]"
+                else:
+                    print("%-- !! Selected port " + multicastPortStr + " is already used on this OS ! Choose another one !")
+
         else:
             self.idmCacheJGroupsCUValues[cpJGroupsTCPBindAddress.name] = idmCacheTCPBindAddressDefault
             self.idmCacheJGroupsCUValues[cpJGroupsTCPBindPort.name] = idmCacheTCPBindPortDefault
             self.idmCacheJGroupsCUValues[cpJGroupsMPINGBindAddress.name] = idmCacheMPINGBindAddressDefault
+            self.idmCacheJGroupsCUValues[cpJGroupsMPINGMulticastAddress.name] = idmCacheMPINGMulticastAddressDefault
+            self.idmCacheJGroupsCUValues[cpJGroupsMPINGMulticastPort.name] = idmCacheMPINGMulticastPortDefault
 
         self.IDMCacheJGroupsProcessor.setKeyParamValue(cpJGroupsTCPBindAddress.name, self.idmCacheJGroupsCUValues[cpJGroupsTCPBindAddress.name])
         self.IDMCacheJGroupsProcessor.setKeyParamValue(cpJGroupsTCPBindPort.name, self.idmCacheJGroupsCUValues[cpJGroupsTCPBindPort.name])
         self.IDMCacheJGroupsProcessor.setKeyParamValue(cpJGroupsMPINGBindAddress.name, self.idmCacheJGroupsCUValues[cpJGroupsMPINGBindAddress.name])
+        self.IDMCacheJGroupsProcessor.setKeyParamValue(cpJGroupsMPINGMulticastAddress.name, self.idmCacheJGroupsCUValues[cpJGroupsMPINGMulticastAddress.name])
+        self.IDMCacheJGroupsProcessor.setKeyParamValue(cpJGroupsMPINGMulticastPort.name, self.idmCacheJGroupsCUValues[cpJGroupsMPINGMulticastPort.name])
 
     def inject(self):
         idmCacheJGroupCUJSON = open("resources/configvalues/components/cuIDMCacheJGroups.json", "w")

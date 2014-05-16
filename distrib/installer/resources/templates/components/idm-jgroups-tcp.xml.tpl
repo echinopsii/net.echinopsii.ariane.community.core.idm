@@ -51,8 +51,8 @@
    -->
 
    <MPING bind_addr="${jgroups.bind_addr:##JGroupsMPINGBindAddress}" break_on_coord_rsp="true"
-      mcast_addr="${jgroups.mping.mcast_addr:228.2.4.6}"
-      mcast_port="${jgroups.mping.mcast_port:43366}"
+      mcast_addr="${jgroups.mping.mcast_addr:##JGroupsMPINGMulticastAddress}"
+      mcast_port="${jgroups.mping.mcast_port:##JGroupsMPINGMulticastPort}"
       ip_ttl="${jgroups.udp.ip_ttl:2}"
       num_initial_members="3"/>
    <MERGE2 max_interval="30000" min_interval="10000"/>
