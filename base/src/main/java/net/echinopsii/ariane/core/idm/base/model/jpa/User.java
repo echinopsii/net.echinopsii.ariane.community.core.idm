@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.spectral.cc.core.idm.base.model.jpa;
+package net.echinopsii.ariane.core.idm.base.model.jpa;
 
-import com.spectral.cc.core.idm.base.model.IUser;
+import net.echinopsii.ariane.core.idm.base.model.IUser;
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Sha512Hash;
@@ -39,7 +39,7 @@ import java.util.Set;
 
 @Entity
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.user")
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.user")
 @XmlRootElement
 @Table(name="user", uniqueConstraints = @UniqueConstraint(columnNames = {"userEmail","userName"}))
 public class User implements IUser<Group, Role>, Serializable {
@@ -83,17 +83,17 @@ public class User implements IUser<Group, Role>, Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.user.groups")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.user.groups")
     private Set<Group> groups = new HashSet<Group>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.user.roles")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.user.roles")
     private Set<Role> roles = new HashSet<Role>();
 
     @OneToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.user.preferences")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.user.preferences")
     private Set<UserPreference> preferences = new HashSet<UserPreference>();
 
     public Long getId() {

@@ -1,6 +1,6 @@
 /**
  * IDM base bundle
- * Resource model interface
+ * Role model interface
  * Copyright (C) 2014 Mathilde Ffrench
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,49 +17,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.spectral.cc.core.idm.base.model;
+package net.echinopsii.ariane.core.idm.base.model;
 
 import java.util.Set;
 
-/**
- * CC IDM resource interface
- */
-public interface IResource<P> {
+public interface IRole<P> {
 
-    /**
-     * Get the resource name
-     * @return the resource name
-     */
     public String getName();
-
-    /**
-     * Set the resource name
-     * @param name (must be unique)
-     */
     public void setName(String name);
 
-    /**
-     * Get the resource description
-     * @return the resource description
-     */
     public String getDescription();
-
-    /**
-     * Set the resource description
-     * @param description
-     */
     public void setDescription(String description);
 
-    /**
-     * Get binded permissions to this resource
-     * @return
-     */
     public Set<P> getPermissions();
-
-    /**
-     * Set binded permissions to this resources
-     * @param permissions (valid resource must have at least one permission)
-     */
     public void setPermissions(Set<P> permissions);
-
 }

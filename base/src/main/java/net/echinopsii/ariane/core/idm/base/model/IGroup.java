@@ -1,7 +1,7 @@
 /**
  * IDM base bundle
- * Web Security Manager Proxy Interface
- * Copyright (C) 2013 Mathilde Ffrench
+ * Group model interface
+ * Copyright (C) 2014 Mathilde Ffrench
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -16,24 +16,39 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.spectral.cc.core.idm.base.proxy;
 
-import org.apache.shiro.web.config.WebIniSecurityManagerFactory;
-import org.apache.shiro.web.mgt.WebSecurityManager;
+package net.echinopsii.ariane.core.idm.base.model;
 
 /**
- * This service target is the Shiro system sharing accross CC components.
+ * Ariane IDM group interface
  */
-public interface WebSecurityManagerProxy {
-    /**
-     * Get the instantiated Shiro web security manager
-     * @return
-     */
-    public WebSecurityManager           getWebSecurityManager() ;
+public interface IGroup<R> {
 
     /**
-     * Get the instantiated Shiro Web ini security manager factory
-     * @return
+     * Get the group name
+     *
+     * @return group name
      */
-    public WebIniSecurityManagerFactory getWebIniSecurityManagerFactory();
+    public String getName();
+
+    /**
+     * Set the group name
+     *
+     * @param name (must be unique)
+     */
+    public void setName(String name);
+
+    /**
+     * Get the group description
+     *
+     * @return group description
+     */
+    public String getDescription();
+
+    /**
+     * Set the group description
+     *
+     * @param description
+     */
+    public void setDescription(String description) ;
 }

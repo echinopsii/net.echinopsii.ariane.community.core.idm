@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.spectral.cc.core.idm.base.proxy.iPojo;
+package net.echinopsii.ariane.core.idm.base.proxy.iPojo;
 
-import com.spectral.cc.core.idm.base.proxy.IDMJPAProvider;
-import com.spectral.cc.core.idm.base.proxy.WebSecurityManagerProxy;
-import com.spectral.cc.core.idm.base.realms.JPARealm;
+import net.echinopsii.ariane.core.idm.base.proxy.IDMJPAProvider;
+import net.echinopsii.ariane.core.idm.base.proxy.WebSecurityManagerProxy;
+import net.echinopsii.ariane.core.idm.base.realms.JPARealm;
 import org.apache.felix.ipojo.annotations.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -41,15 +41,15 @@ import java.io.InputStream;
 /**
  * This service target is the Shiro system sharing accross CC components.<br/><br/>
  *
- * This is the iPojo implementation of {@link com.spectral.cc.core.idm.base.proxy.WebSecurityManagerProxy}. The component is instantiated at commons-services bundle startup.
- * It provides the {@link com.spectral.cc.core.idm.base.proxy.WebSecurityManagerProxy} service.
+ * This is the iPojo implementation of {@link net.echinopsii.ariane.core.idm.base.proxy.WebSecurityManagerProxy}. The component is instantiated at commons-services bundle startup.
+ * It provides the {@link net.echinopsii.ariane.core.idm.base.proxy.WebSecurityManagerProxy} service.
  */
 @Component
 @Provides
 @Instantiate
 public class WebSecurityManagerProxyImpl extends JPARealm implements WebSecurityManagerProxy {
 
-    private static final String SECURITY_MANAGER_PROXY_SERVICE_NAME = "CC IDM Security Manager Proxy";
+    private static final String SECURITY_MANAGER_PROXY_SERVICE_NAME = "Ariane IDM Security Manager Proxy";
     private static final String SHIRO_BASE_INI_FILE_PATH = "shiro.ini";
     private static final Logger log = LoggerFactory.getLogger(WebSecurityManagerProxyImpl.class);
 

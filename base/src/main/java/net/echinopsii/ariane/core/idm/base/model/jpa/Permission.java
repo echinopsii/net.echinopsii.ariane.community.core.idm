@@ -1,6 +1,6 @@
 /**
  * IDM base bundle
- * Resource JPA impl
+ * Permission JPA impl
  * Copyright (C) 2014 Mathilde Ffrench
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.spectral.cc.core.idm.base.model.jpa;
+package net.echinopsii.ariane.core.idm.base.model.jpa;
 
-import com.spectral.cc.core.idm.base.model.IResource;
+import net.echinopsii.ariane.core.idm.base.model.IPermission;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 
@@ -34,10 +34,10 @@ import java.util.Set;
 
 @Entity
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.resource")
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.permission")
 @XmlRootElement
-@Table(name="resource", uniqueConstraints = @UniqueConstraint(columnNames = {"resourceName"}))
-public class Resource implements IResource<Permission>, Serializable {
+@Table(name="permission", uniqueConstraints = @UniqueConstraint(columnNames = {"permissionName"}))
+public class Permission implements IPermission<Resource>, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,17 +48,22 @@ public class Resource implements IResource<Permission>, Serializable {
     @Column(name = "version")
     private int version = 0;
 
-    @Column(name="resourceName", unique=true)
+    @Column(name="permissionName", unique=true)
     @NotNull
     private String name;
 
     @Column
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @NotNull
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.permission.resources")
+    private Resource resource;
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.resource.permissions")
-    private Set<Permission> permissions = new HashSet<Permission>();
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.permission.roles")
+    private Set<Role> roles = new HashSet<Role>();
 
     public Long getId() {
         return id;
@@ -68,7 +73,7 @@ public class Resource implements IResource<Permission>, Serializable {
         this.id = id;
     }
 
-    public Resource setIdR(Long id) {
+    public Permission setIdR(Long id) {
         this.id = id;
         return this;
     }
@@ -81,7 +86,7 @@ public class Resource implements IResource<Permission>, Serializable {
         this.version = version;
     }
 
-    public Resource setVersionR(int version) {
+    public Permission setVersionR(int version) {
         this.version = version;
         return this;
     }
@@ -96,7 +101,7 @@ public class Resource implements IResource<Permission>, Serializable {
         this.name = name;
     }
 
-    public Resource setNameR(String name) {
+    public Permission setNameR(String name) {
         this.name = name;
         return this;
     }
@@ -111,28 +116,42 @@ public class Resource implements IResource<Permission>, Serializable {
         this.description = description;
     }
 
-    public Resource setDescriptionR(String description) {
+    public Permission setDescriptionR(String description) {
         this.description = description;
         return this;
     }
 
     @Override
-    public Set<Permission> getPermissions() {
-        return permissions;
+    public Resource getResource() {
+        return this.resource;
     }
 
     @Override
-    public void setPermissions(Set<Permission> permissions) {
-        this.permissions = permissions;
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
-    public Resource setPermissionsR(Set<Permission> permissions) {
-        this.permissions = permissions;
+    public Permission setResourceR(Resource resource) {
+        this.resource = resource;
         return this;
     }
 
-    public Resource clone() {
-        return new Resource().setIdR(this.id).setVersionR(this.version).setNameR(this.name).setDescriptionR(this.description).setPermissionsR(new HashSet<Permission>(this.permissions));
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Permission setRolesR(Set<Role> roles) {
+        this.roles = roles;
+        return this;
+    }
+
+    public Permission clone() {
+        return new Permission().setIdR(this.id).setVersionR(this.version).setNameR(this.name).setDescriptionR(this.description).setResourceR(this.resource).
+                                setRolesR(new HashSet<Role>(this.roles));
     }
 
     @Override
@@ -144,9 +163,9 @@ public class Resource implements IResource<Permission>, Serializable {
             return false;
         }
 
-        Resource resource = (Resource) o;
+        Permission that = (Permission) o;
 
-        if (!id.equals(resource.id)) {
+        if (!id.equals(that.id)) {
             return false;
         }
 

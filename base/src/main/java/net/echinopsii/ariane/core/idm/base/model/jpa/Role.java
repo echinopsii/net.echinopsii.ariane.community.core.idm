@@ -1,6 +1,6 @@
 /**
  * IDM base bundle
- * Permission JPA impl
+ * Role JPA impl
  * Copyright (C) 2014 Mathilde Ffrench
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.spectral.cc.core.idm.base.model.jpa;
+package net.echinopsii.ariane.core.idm.base.model.jpa;
 
-import com.spectral.cc.core.idm.base.model.IPermission;
+import net.echinopsii.ariane.core.idm.base.model.IRole;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 
@@ -32,12 +32,13 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+
 @Entity
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.permission")
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.role")
 @XmlRootElement
-@Table(name="permission", uniqueConstraints = @UniqueConstraint(columnNames = {"permissionName"}))
-public class Permission implements IPermission<Resource>, Serializable {
+@Table(name="role", uniqueConstraints = @UniqueConstraint(columnNames = {"roleName"}))
+public class Role implements IRole<Permission>, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,22 +49,27 @@ public class Permission implements IPermission<Resource>, Serializable {
     @Column(name = "version")
     private int version = 0;
 
-    @Column(name="permissionName", unique=true)
+    @Column(name="roleName", unique=true)
     @NotNull
     private String name;
 
     @Column
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @NotNull
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.permission.resources")
-    private Resource resource;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.role.permissions")
+    private Set<Permission> permissions = new HashSet<Permission>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.permission.roles")
-    private Set<Role> roles = new HashSet<Role>();
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.role.users")
+    private Set<User> users = new HashSet<User>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.role.groups")
+    private Set<Group> groups = new HashSet<Group>();
 
     public Long getId() {
         return id;
@@ -73,7 +79,7 @@ public class Permission implements IPermission<Resource>, Serializable {
         this.id = id;
     }
 
-    public Permission setIdR(Long id) {
+    public Role setIdR(Long id) {
         this.id = id;
         return this;
     }
@@ -86,14 +92,14 @@ public class Permission implements IPermission<Resource>, Serializable {
         this.version = version;
     }
 
-    public Permission setVersionR(int version) {
+    public Role setVersionR(int version) {
         this.version = version;
         return this;
     }
 
     @Override
     public String getName() {
-        return this.name;
+        return name;
     }
 
     @Override
@@ -101,14 +107,14 @@ public class Permission implements IPermission<Resource>, Serializable {
         this.name = name;
     }
 
-    public Permission setNameR(String name) {
+    public Role setNameR(String name) {
         this.name = name;
         return this;
     }
 
     @Override
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     @Override
@@ -116,42 +122,55 @@ public class Permission implements IPermission<Resource>, Serializable {
         this.description = description;
     }
 
-    public Permission setDescriptionR(String description) {
+    public Role setDescriptionR(String description) {
         this.description = description;
         return this;
     }
 
     @Override
-    public Resource getResource() {
-        return this.resource;
+    public Set<Permission> getPermissions() {
+        return permissions;
     }
 
     @Override
-    public void setResource(Resource resource) {
-        this.resource = resource;
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 
-    public Permission setResourceR(Resource resource) {
-        this.resource = resource;
+    public Role setPermissionsR(Set<Permission> permissions) {
+        this.permissions = permissions;
         return this;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
-    public Permission setRolesR(Set<Role> roles) {
-        this.roles = roles;
+    public Role setUsersR(Set<User> users) {
+        this.users = users;
         return this;
     }
 
-    public Permission clone() {
-        return new Permission().setIdR(this.id).setVersionR(this.version).setNameR(this.name).setDescriptionR(this.description).setResourceR(this.resource).
-                                setRolesR(new HashSet<Role>(this.roles));
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
+    }
+
+    public Role setGroupsR(Set<Group> groups) {
+        this.groups = groups;
+        return this;
+    }
+
+    public Role clone() {
+        return new Role().setIdR(id).setVersionR(version).setNameR(name).setDescriptionR(description).setPermissionsR(new HashSet<Permission>(permissions)).
+                          setUsersR(new HashSet<User>(users)).setGroupsR(new HashSet<Group>(groups));
     }
 
     @Override
@@ -163,9 +182,9 @@ public class Permission implements IPermission<Resource>, Serializable {
             return false;
         }
 
-        Permission that = (Permission) o;
+        Role role = (Role) o;
 
-        if (!id.equals(that.id)) {
+        if (!id.equals(role.id)) {
             return false;
         }
 

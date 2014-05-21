@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.spectral.cc.core.idm.base.proxy;
+package net.echinopsii.ariane.core.idm.base.proxy;
 
 import org.osgi.framework.Bundle;
 
@@ -25,7 +25,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 /**
- * The IDM JPA provider provide tools to create EntityManager for the cc-idm persistence unit. It also add a feature to extend the cc-idm persistance unit through CC plugins. <br/><br/>
+ * The IDM JPA provider provide tools to create EntityManager for the ariane-idm persistence unit. It also add a feature to extend the cc-idm persistance unit through Ariane plugins. <br/><br/>
  * To make work this feature you must have the spectral hibernate distribution which enables this feature.<br/>
  *
  * @see <a href="https://github.com/mffrench/hibernate-orm/tree/4.3.0.Final.spectral">spectral hibernate distribution</a>

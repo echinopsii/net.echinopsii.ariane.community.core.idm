@@ -2,13 +2,13 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              version="2.0">
-    <persistence-unit name="cc-idm">
-        <class>com.spectral.cc.core.idm.base.model.jpa.Group</class>
-        <class>com.spectral.cc.core.idm.base.model.jpa.Permission</class>
-        <class>com.spectral.cc.core.idm.base.model.jpa.Resource</class>
-        <class>com.spectral.cc.core.idm.base.model.jpa.Role</class>
-        <class>com.spectral.cc.core.idm.base.model.jpa.User</class>
-        <class>com.spectral.cc.core.idm.base.model.jpa.UserPreference</class>
+    <persistence-unit name="ariane-idm">
+        <class>net.echinopsii.ariane.core.idm.base.model.jpa.Group</class>
+        <class>net.echinopsii.ariane.core.idm.base.model.jpa.Permission</class>
+        <class>net.echinopsii.ariane.core.idm.base.model.jpa.Resource</class>
+        <class>net.echinopsii.ariane.core.idm.base.model.jpa.Role</class>
+        <class>net.echinopsii.ariane.core.idm.base.model.jpa.User</class>
+        <class>net.echinopsii.ariane.core.idm.base.model.jpa.UserPreference</class>
         <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
     </persistence-unit>
 </persistence>

@@ -17,11 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.spectral.cc.core.idm.base.proxy.iPojo;
+package net.echinopsii.ariane.core.idm.base.proxy.iPojo;
 
-import com.spectral.cc.core.idm.base.model.jpa.Role;
-import com.spectral.cc.core.idm.base.model.jpa.User;
-import com.spectral.cc.core.idm.base.proxy.IDMJPAProvider;
+import net.echinopsii.ariane.core.idm.base.model.jpa.Role;
+import net.echinopsii.ariane.core.idm.base.model.jpa.User;
+import net.echinopsii.ariane.core.idm.base.proxy.IDMJPAProvider;
 import org.apache.felix.ipojo.annotations.*;
 import org.hibernate.FlushMode;
 import org.hibernate.osgi.HibernateOSGiService;
@@ -44,7 +44,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 
 /**
- * The directory JPA provider provide tools to create EntityManager for the cc-idm persistence unit. It also add a feature to extend the cc-idm persistance unit through CC plugins. <br/><br/>
+ * The directory JPA provider provide tools to create EntityManager for the ariane-idm persistence unit. It also add a feature to extend the ariane-idm persistance unit through Ariane plugins. <br/><br/>
  * To make work this feature you must have the spectral hibernate distribution which enables this feature.<br/>
  *
  * @see <a href="https://github.com/mffrench/hibernate-orm/tree/4.3.0.Final.spectral">spectral hibernate distribution</a>
@@ -52,13 +52,13 @@ import java.util.HashMap;
  * This is the iPojo implementation of {@link IDMJPAProvider}. The component is instantiated at commons-services bundle startup.
  * It provides the {@link IDMJPAProvider} service.
  */
-@Component(managedservice="com.spectral.cc.core.IDMJPAProviderManagedService")
+@Component(managedservice="net.echinopsii.ariane.core.IDMJPAProviderManagedService")
 @Provides
 @Instantiate
 public class IDMJPAProviderImpl implements IDMJPAProvider {
 
-    private static final String IDM_TXPERSISTENCE_CONSUMER_SERVICE_NAME = "CC IDM JPA Persistence Provider";
-    private static final String IDM_TXPERSISTENCE_PERSISTENCE_UNIT_NAME = "cc-idm";
+    private static final String IDM_TXPERSISTENCE_CONSUMER_SERVICE_NAME = "Ariane IDM JPA Persistence Provider";
+    private static final String IDM_TXPERSISTENCE_PERSISTENCE_UNIT_NAME = "ariane-idm";
     private static final Logger log = LoggerFactory.getLogger(IDMJPAProviderImpl.class);
 
     private EntityManagerFactory   sharedEMF        = null;

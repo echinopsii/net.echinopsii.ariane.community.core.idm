@@ -3,15 +3,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.spectral.cc.core</groupId>
-        <artifactId>com.spectral.cc.core.idm</artifactId>
-        <version>0.3.0.RELEASE</version>
+        <groupId>net.echinopsii.ariane.core</groupId>
+        <artifactId>net.echinopsii.ariane.core.idm</artifactId>
+        <version>0.4.0-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
 
-    <groupId>com.spectral.cc.core.idm</groupId>
-    <artifactId>com.spectral.cc.core.idm.base</artifactId>
-    <name>CC Core IDM Base</name>
+    <groupId>net.echinopsii.ariane.core.idm</groupId>
+    <artifactId>net.echinopsii.ariane.core.idm.base</artifactId>
+    <name>Ariane Core IDM Base</name>
     <packaging>bundle</packaging>
 
     <build>
@@ -87,9 +87,9 @@
                             *
                         </Import-Package>
                         <Export-Package>
-                            com.spectral.cc.core.idm.base.model;version=${project.version},
-                            com.spectral.cc.core.idm.base.model.jpa;version=${project.version},
-                            com.spectral.cc.core.idm.base.proxy;version=${project.version}
+                            net.echinopsii.ariane.core.idm.base.model;version=${project.version},
+                            net.echinopsii.ariane.core.idm.base.model.jpa;version=${project.version},
+                            net.echinopsii.ariane.core.idm.base.proxy;version=${project.version}
                         </Export-Package>
                     </instructions>
                 </configuration>

@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.spectral.cc.core.idm.base.model.jpa;
+package net.echinopsii.ariane.core.idm.base.model.jpa;
 
-import com.spectral.cc.core.idm.base.model.IGroup;
+import net.echinopsii.ariane.core.idm.base.model.IGroup;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 
@@ -34,7 +34,7 @@ import java.util.Set;
 
 @Entity
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.group")
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.group")
 @XmlRootElement
 @Table(name="ccGroup", uniqueConstraints = @UniqueConstraint(columnNames = {"groupName"}))
 public class Group implements IGroup, Serializable {
@@ -57,12 +57,12 @@ public class Group implements IGroup, Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.group.users")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.group.users")
     private Set<User> users = new HashSet<User>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.group.roles")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.group.roles")
     private Set<Role> roles = new HashSet<Role>();
 
     public Long getId() {

@@ -17,13 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.spectral.cc.core.idm.base.realms;
+package net.echinopsii.ariane.core.idm.base.realms;
 
-import com.spectral.cc.core.idm.base.model.jpa.Group;
-import com.spectral.cc.core.idm.base.model.jpa.Permission;
-import com.spectral.cc.core.idm.base.model.jpa.Role;
-import com.spectral.cc.core.idm.base.model.jpa.User;
-import com.spectral.cc.core.idm.base.proxy.IDMJPAProvider;
+import net.echinopsii.ariane.core.idm.base.model.jpa.Group;
+import net.echinopsii.ariane.core.idm.base.model.jpa.Permission;
+import net.echinopsii.ariane.core.idm.base.model.jpa.Role;
+import net.echinopsii.ariane.core.idm.base.model.jpa.User;
+import net.echinopsii.ariane.core.idm.base.proxy.IDMJPAProvider;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -78,7 +78,7 @@ public abstract class JPARealm  extends AuthorizingRealm {
         cmpQuery.setHint("org.hibernate.readOnly", true);
         cmpQuery.setHint("org.hibernate.flushMode", FlushMode.MANUAL);
         cmpQuery.setHint("org.hibernate.cacheable", true);
-        cmpQuery.setHint("org.hibernate.cacheRegion", "cc.core.idm.cache.queries");
+        cmpQuery.setHint("org.hibernate.cacheRegion", "ariane.core.idm.cache.queries");
         try {
             user = cmpQuery.getSingleResult();
         } catch (NoResultException e) {
@@ -137,7 +137,7 @@ public abstract class JPARealm  extends AuthorizingRealm {
         cmpQuery.setHint("org.hibernate.readOnly", true);
         cmpQuery.setHint("org.hibernate.flushMode", FlushMode.MANUAL);
         cmpQuery.setHint("org.hibernate.cacheable", true);
-        cmpQuery.setHint("org.hibernate.cacheRegion", "cc.core.idm.cache.queries");
+        cmpQuery.setHint("org.hibernate.cacheRegion", "ariane.core.idm.cache.queries");
         try {
             user = cmpQuery.getSingleResult();
             log.debug("User {} found !", user.getUserName());

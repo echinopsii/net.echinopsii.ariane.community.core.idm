@@ -1,6 +1,6 @@
 /**
  * IDM base bundle
- * Permission model interface
+ * Resource model interface
  * Copyright (C) 2014 Mathilde Ffrench
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,46 +17,49 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.spectral.cc.core.idm.base.model;
+package net.echinopsii.ariane.core.idm.base.model;
+
+import java.util.Set;
 
 /**
- * CC IDM permission interface
+ * Ariane IDM resource interface
  */
-public interface IPermission<R> {
+public interface IResource<P> {
 
     /**
-     * get the permission name
-     * @return permission name
+     * Get the resource name
+     * @return the resource name
      */
     public String getName();
 
     /**
-     * set the permission name
+     * Set the resource name
      * @param name (must be unique)
      */
     public void setName(String name);
 
     /**
-     * get the permission description
-     * @return the permission description
+     * Get the resource description
+     * @return the resource description
      */
     public String getDescription();
 
     /**
-     * set the permission description
+     * Set the resource description
      * @param description
      */
     public void setDescription(String description);
 
     /**
-     * get the resource binded to this permission
-     * @return the permission's resource
+     * Get binded permissions to this resource
+     * @return
      */
-    public R getResource();
+    public Set<P> getPermissions();
 
     /**
-     * set the resource to bind to this permission. Permission MUST be binded to a resource
-     * @param resource (not null)
+     * Set binded permissions to this resources
+     * @param permissions (valid resource must have at least one permission)
      */
-    public void setResource(R resource);
+    public void setPermissions(Set<P> permissions);
+
 }

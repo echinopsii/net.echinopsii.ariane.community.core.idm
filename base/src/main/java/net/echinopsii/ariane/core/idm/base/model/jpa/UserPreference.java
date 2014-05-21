@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.spectral.cc.core.idm.base.model.jpa;
+package net.echinopsii.ariane.core.idm.base.model.jpa;
 
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
@@ -31,7 +31,7 @@ import java.io.Serializable;
 
 @Entity
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.userpreference")
+@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.userpreference")
 @XmlRootElement
 @Table(name="preference")
 public class UserPreference implements Serializable {
@@ -54,7 +54,7 @@ public class UserPreference implements Serializable {
     private String pvalue;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "cc.core.idm.cache.userpreference.user")
+    @Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "ariane.core.idm.cache.userpreference.user")
     @NotNull
     private User user;
 

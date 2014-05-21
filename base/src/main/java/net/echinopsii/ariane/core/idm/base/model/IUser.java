@@ -17,12 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.spectral.cc.core.idm.base.model;
+package net.echinopsii.ariane.core.idm.base.model;
 
 import java.util.Set;
 
 /**
- * CC IDM user interface
+ * Ariane IDM user interface
  */
 public interface IUser<G, R> {
 
