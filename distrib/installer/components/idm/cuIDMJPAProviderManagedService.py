@@ -1,4 +1,4 @@
-# CC installer idm JPA provider configuration parameters
+# installer idm JPA provider configuration parameters
 #
 # Copyright (C) 2014 Mathilde Ffrench
 #
@@ -28,7 +28,7 @@ __author__ = 'echinopsii'
 class cpHibernateConnectionPassword(AConfParamNotNone):
 
     name = "##hibernateConnectionPassword"
-    description = "CC idm hibernate connection password"
+    description = "IDM DB connection password"
     hide = True
 
     def __init__(self):
@@ -38,7 +38,7 @@ class cpHibernateConnectionPassword(AConfParamNotNone):
 class cpHibernateConnectionURL(AConfParamNotNone):
 
     name = "##hibernateConnectionURL"
-    description = "CC idm hibernate connection URL"
+    description = "IDM DB connection URL"
     hide = False
 
     def __init__(self):
@@ -48,7 +48,7 @@ class cpHibernateConnectionURL(AConfParamNotNone):
 class cpHibernateConnectionUsername(AConfParamNotNone):
 
     name = "##hibernateConnectionUsername"
-    description = "CC idm hibernate username"
+    description = "IDM DB username"
     hide = False
 
     def __init__(self):
@@ -58,7 +58,7 @@ class cpHibernateConnectionUsername(AConfParamNotNone):
 class cpHibernateDialect(AConfParamNotNone):
 
     name = "##hibernateDialect"
-    description = "CC idm hibernate dialect"
+    description = "IDM DB dialect"
     hide = False
 
     def __init__(self):
@@ -68,7 +68,7 @@ class cpHibernateDialect(AConfParamNotNone):
 class cpHibernateDriverClass(AConfParamNotNone):
 
     name = "##hibernateDriverClass"
-    description = "CC idm hibernate driver class"
+    description = "IDM DB driver class"
     hide = False
 
     def __init__(self):
@@ -78,7 +78,7 @@ class cpHibernateDriverClass(AConfParamNotNone):
 class cpHibernateCacheInfinispanCfg(AConfParamNotNone):
 
     name = "##hibernateCacheInfinispanCfg"
-    description = "CC idm hibernate L2 cache infinispan config"
+    description = "IDM DB L2 cache infinispan config"
     hide = False
 
     def __init__(self):
@@ -88,9 +88,9 @@ class cpHibernateCacheInfinispanCfg(AConfParamNotNone):
 class cuIDMJPAProviderManagedServiceProcessor(AConfUnit):
 
     def __init__(self, targetConfDir):
-        self.confUnitName = "CC idm JPA provider"
-        self.confTemplatePath = os.path.abspath("resources/templates/components/com.spectral.cc.core.IDMJPAProviderManagedService.properties.tpl")
-        self.confFinalPath = targetConfDir + "com.spectral.cc.core.IDMJPAProviderManagedService.properties"
+        self.confUnitName = "IDM JPA provider"
+        self.confTemplatePath = os.path.abspath("resources/templates/components/net.echinopsii.ariane.core.IDMJPAProviderManagedService.properties.tpl")
+        self.confFinalPath = targetConfDir + "net.echinopsii.ariane.core.IDMJPAProviderManagedService.properties"
         hibernateDriverClass = cpHibernateDriverClass()
         hibernateDialect = cpHibernateDialect()
         hibernateConnectionURL = cpHibernateConnectionURL()
@@ -148,7 +148,7 @@ class idmJPAProviderManagedServiceSyringe:
                 while not idmJPAProviderManagedServiceConnectionDefined:
 
                     if not self.silent:
-                        dbServerFQDN = input("%-- >> Define CC idm DB FQDN " + dbServerFQDNDefaultUI + ": ")
+                        dbServerFQDN = input("%-- >> Define IDM DB FQDN " + dbServerFQDNDefaultUI + ": ")
                         if dbServerFQDN == "" or dbServerFQDN is None:
                             dbServerFQDN = dbServerFQDNDefault
                         else:
@@ -162,7 +162,7 @@ class idmJPAProviderManagedServiceSyringe:
                         dbServerPortStr = ""
                         while not serverPortIsValid:
                             dbServerPort = 0
-                            dbServerPortStr = input("%-- >> Define CC idm DB port " + dbServerPortDefaultUI + ": ")
+                            dbServerPortStr = input("%-- >> Define IDM DB port " + dbServerPortDefaultUI + ": ")
                             if dbServerPortStr == "" or dbServerPortStr is None:
                                 dbServerPortStr = dbServerPortDefault
                                 dbServerPort = int(dbServerPortDefault)
@@ -186,7 +186,7 @@ class idmJPAProviderManagedServiceSyringe:
                         dbNameIsValid = False
                         dbName = ""
                         while not dbNameIsValid:
-                            dbName = input("%-- >> Define CC idm DB name " + dbNameDefaultUI + ": ")
+                            dbName = input("%-- >> Define IDM DB name " + dbNameDefaultUI + ": ")
                             if dbName != "":
                                 dbNameIsValid = True
                                 dbNameDefault = dbName
@@ -207,7 +207,7 @@ class idmJPAProviderManagedServiceSyringe:
 
                         dbServerUsernameIsValid = False
                         while not dbServerUsernameIsValid:
-                            self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionUsername.name] = input("%-- >> Define CC idm DB username " + dbServerUsernameDefaultUI + ": ")
+                            self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionUsername.name] = input("%-- >> Define IDM DB username " + dbServerUsernameDefaultUI + ": ")
                             if self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionUsername.name] != "":
                                 dbServerUsernameIsValid = True
                                 dbServerUsernameDefault = self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionUsername.name]
@@ -221,7 +221,7 @@ class idmJPAProviderManagedServiceSyringe:
                     if not self.silent:
                         dbServerPasswordIsValid = False
                         while not dbServerPasswordIsValid:
-                            self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionPassword.name] = getpass.getpass("%-- >> Define CC idm DB password : ")
+                            self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionPassword.name] = getpass.getpass("%-- >> Define IDM DB password : ")
                             if self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionPassword.name] != "":
                                 dbServerPasswordIsValid = True
                     else:

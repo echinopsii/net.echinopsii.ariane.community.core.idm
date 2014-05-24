@@ -1,4 +1,4 @@
-# CC installer idm processor
+# installer idm processor
 #
 # Copyright (C) 2014 Mathilde Ffrench
 #
@@ -26,10 +26,10 @@ class idmProcessor:
 
     def __init__(self, homeDirPath, silent):
         print("\n%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--%--\n")
-        print("%-- CC idm configuration : \n")
+        print("%-- IDM configuration : \n")
         self.silent = silent
         self.homeDirPath = homeDirPath
-        kernelRepositoryDirPath = self.homeDirPath + "/repository/cc-distrib/"
+        kernelRepositoryDirPath = self.homeDirPath + "/repository/ariane-distrib/"
         if not os.path.exists(kernelRepositoryDirPath):
             os.makedirs(kernelRepositoryDirPath, 0o755)
         self.idmJPAProviderSyringe = idmJPAProviderManagedServiceSyringe(kernelRepositoryDirPath, silent)
