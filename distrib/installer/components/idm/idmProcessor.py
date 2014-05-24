@@ -29,7 +29,7 @@ class idmProcessor:
         print("%-- IDM configuration : \n")
         self.silent = silent
         self.homeDirPath = homeDirPath
-        kernelRepositoryDirPath = self.homeDirPath + "/repository/ariane-distrib/"
+        kernelRepositoryDirPath = self.homeDirPath + "/repository/ariane-core/"
         if not os.path.exists(kernelRepositoryDirPath):
             os.makedirs(kernelRepositoryDirPath, 0o755)
         self.idmJPAProviderSyringe = idmJPAProviderManagedServiceSyringe(kernelRepositoryDirPath, silent)
