@@ -3,12 +3,12 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              version="2.0">
     <persistence-unit name="ariane-idm">
-        <class>net.echinopsii.ariane.core.idm.base.model.jpa.Group</class>
-        <class>net.echinopsii.ariane.core.idm.base.model.jpa.Permission</class>
-        <class>net.echinopsii.ariane.core.idm.base.model.jpa.Resource</class>
-        <class>net.echinopsii.ariane.core.idm.base.model.jpa.Role</class>
-        <class>net.echinopsii.ariane.core.idm.base.model.jpa.User</class>
-        <class>net.echinopsii.ariane.core.idm.base.model.jpa.UserPreference</class>
+        <class>net.echinopsii.ariane.community.core.idm.base.model.jpa.Group</class>
+        <class>net.echinopsii.ariane.community.core.idm.base.model.jpa.Permission</class>
+        <class>net.echinopsii.ariane.community.core.idm.base.model.jpa.Resource</class>
+        <class>net.echinopsii.ariane.community.core.idm.base.model.jpa.Role</class>
+        <class>net.echinopsii.ariane.community.core.idm.base.model.jpa.User</class>
+        <class>net.echinopsii.ariane.community.core.idm.base.model.jpa.UserPreference</class>
         <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
     </persistence-unit>
 </persistence>
