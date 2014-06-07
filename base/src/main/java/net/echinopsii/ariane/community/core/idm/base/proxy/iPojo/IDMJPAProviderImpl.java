@@ -168,7 +168,7 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
             role.getUsers().add(user);
             em.flush();
             em.getTransaction().commit();
-            log.warn("THIS IS YOUR FIRST CC USAGE. A FAKE USER HAS BEEN CREATED WITH FULL RIGHTS (yoda / secret). YOU MUST AT LEAST CHANGE ITS PASSWORD OR CREATE NEW USER AND REMOVE THIS ONE !!!");
+            log.warn("THIS IS YOUR FIRST ARIANE USAGE. A FAKE USER HAS BEEN CREATED WITH FULL RIGHTS (yoda / secret). YOU MUST AT LEAST CHANGE ITS PASSWORD OR CREATE NEW USER AND REMOVE THIS ONE !!!");
         }
     }
 
