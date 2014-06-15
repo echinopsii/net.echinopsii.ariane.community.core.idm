@@ -173,7 +173,7 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
             try {
                 group = yodaGrpQuery.getSingleResult();
             } catch (NoResultException e) {
-                group = new Group().setNameR("yoda").setDescriptionR("Yoda personal group");
+                group = new Group().setNameR("yoda").setDescriptionR("yoda personal group");
             } catch (Exception e) {
                 throw e;
             }
