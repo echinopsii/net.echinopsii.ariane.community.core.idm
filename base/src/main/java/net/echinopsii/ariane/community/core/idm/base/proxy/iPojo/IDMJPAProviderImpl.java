@@ -19,6 +19,7 @@
 
 package net.echinopsii.ariane.community.core.idm.base.proxy.iPojo;
 
+import net.echinopsii.ariane.community.core.idm.base.model.jpa.Group;
 import net.echinopsii.ariane.community.core.idm.base.model.jpa.Role;
 import net.echinopsii.ariane.community.core.idm.base.model.jpa.User;
 import net.echinopsii.ariane.community.core.idm.base.proxy.IDMJPAProvider;
@@ -124,7 +125,7 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
             user.setUserName("yoda");
             user.setFirstName("Yoda");
             user.setLastName("ZeOne");
-            user.setEmail("yoda@spectral.com");
+            user.setEmail("yoda@echinopsii.net");
             user.setPhone("6969696969696969");
             user.setPassword("secret");
             em.persist(user);
@@ -137,8 +138,10 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
      * init db if no user already defined (ie : just after install) : create yoda jedi user
      */
     private void initDB() {
-        User user = null;
-        Role role = null;
+        User  user  = null;
+        Role  role  = null;
+        Group group = null;
+
         EntityManager em = this.createEM();
         CriteriaBuilder builder = em.getCriteriaBuilder();
 
@@ -148,6 +151,8 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
         int rowCount = (int) (long) em.createQuery(countCriteria).getSingleResult();
 
         if (rowCount == 0) {
+            log.warn("No admin user has been defined during installation ! You may have some problem during installation... ");
+            log.warn("Try to define a fake admin user to let you play with Ariane !");
             CriteriaQuery<Role> jediCriteria = builder.createQuery(Role.class);
             Root<Role> jediRoot = jediCriteria.from(Role.class);
             jediCriteria.select(jediRoot).where(builder.equal(jediRoot.<String>get("name"), "Jedi"));
@@ -161,11 +166,30 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
                 throw e;
             }
 
-            user = new User().setUserNameR("yoda").setFirstNameR("Yoda").setLastNameR("ZeOne").setEmailR("yoda@spectral.com").setPhoneR("6969696969").setPasswordR("secret");
+            CriteriaQuery<Group> yodaGrpCriteria = builder.createQuery(Group.class);
+            Root<Group> yodaGrpRoot = yodaGrpCriteria.from(Group.class);
+            yodaGrpCriteria.select(yodaGrpRoot).where(builder.equal(yodaGrpRoot.<String>get("name"), "yoda"));
+            TypedQuery<Group> yodaGrpQuery = em.createQuery(yodaGrpCriteria);
+            try {
+                group = yodaGrpQuery.getSingleResult();
+            } catch (NoResultException e) {
+                group = new Group().setNameR("yoda").setDescriptionR("Yoda personal group");
+            } catch (Exception e) {
+                throw e;
+            }
+
+            user = new User().setUserNameR("yoda").setFirstNameR("Yoda").setLastNameR("ZeOne").setEmailR("yoda@echinopsii.net").setPhoneR("6969696969").setPasswordR("secret");
             em.getTransaction().begin();
             em.persist(user);
+            em.persist(group);
+
+            user.getGroups().add(group);
             user.getRoles().add(role);
+
+            group.getUsers().add(user);
+
             role.getUsers().add(user);
+            role.getGroups().add(group);
             em.flush();
             em.getTransaction().commit();
             log.warn("THIS IS YOUR FIRST ARIANE USAGE. A FAKE USER HAS BEEN CREATED WITH FULL RIGHTS (yoda / secret). YOU MUST AT LEAST CHANGE ITS PASSWORD OR CREATE NEW USER AND REMOVE THIS ONE !!!");
