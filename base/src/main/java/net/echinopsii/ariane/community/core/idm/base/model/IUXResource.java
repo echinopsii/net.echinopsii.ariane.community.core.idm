@@ -86,40 +86,12 @@ public interface IUXResource<P> {
      *
      * @return
      */
-    public Set<P> getUserPermissions();
+    public Set<P> getUxPermissions();
 
     /**
      * Set the user permissions
      *
      * @param userPermissions
      */
-    public void setUserPermissions(Set<P> userPermissions);
-
-    /**
-     * Get the group permissions
-     *
-     * @return
-     */
-    public Set<P> getGroupPermissions();
-
-    /**
-     * Set the group permissions
-     *
-     * @param groupPermissions
-     */
-    public void setGroupPermissions(Set<P> groupPermissions);
-
-    /**
-     * Get other users permissions
-     *
-     * @return
-     */
-    public Set<P> getOtherPermissions();
-
-    /**
-     * Set other users permissions
-     *
-     * @param otherPermissions
-     */
-    public void setOtherPermissions(Set<P> otherPermissions);
+    public void setUxPermissions(Set<P> userPermissions);
 }

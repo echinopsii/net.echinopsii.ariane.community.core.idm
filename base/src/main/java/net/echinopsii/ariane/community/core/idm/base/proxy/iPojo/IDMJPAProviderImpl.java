@@ -19,9 +19,7 @@
 
 package net.echinopsii.ariane.community.core.idm.base.proxy.iPojo;
 
-import net.echinopsii.ariane.community.core.idm.base.model.jpa.Group;
-import net.echinopsii.ariane.community.core.idm.base.model.jpa.Role;
-import net.echinopsii.ariane.community.core.idm.base.model.jpa.User;
+import net.echinopsii.ariane.community.core.idm.base.model.jpa.*;
 import net.echinopsii.ariane.community.core.idm.base.proxy.IDMJPAProvider;
 import org.apache.felix.ipojo.annotations.*;
 import org.hibernate.FlushMode;
@@ -40,15 +38,13 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.persistence.spi.PersistenceProvider;
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.HashMap;
+import java.util.*;
 
 /**
- * The directory JPA provider provide tools to create EntityManager for the ariane-idm persistence unit. It also add a feature to extend the ariane-idm persistance unit through Ariane plugins. <br/><br/>
- * To make work this feature you must have the spectral hibernate distribution which enables this feature.<br/>
+ * The IDM JPA provider provide tools to create EntityManager for the ariane-idm persistence unit. It also add a feature to extend the ariane-idm persistance unit through Ariane plugins. <br/><br/>
+ * To make work this feature you must have the echinopsii hibernate distribution which enables this feature.<br/>
  *
- * @see <a href="https://github.com/mffrench/hibernate-orm/tree/4.3.0.Final.spectral">spectral hibernate distribution</a>
+ * @see <a href="https://github.com/echinopsii/net.echinopsii.3rdparty.hibernate-orm">echinopsii hibernate distribution</a>
  *
  * This is the iPojo implementation of {@link IDMJPAProvider}. The component is instantiated at commons-services bundle startup.
  * It provides the {@link IDMJPAProvider} service.
@@ -98,6 +94,116 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
         this.hibernateOSGiService = null;
     }
 
+    private void initUXPerms(EntityManager em) {
+        try {
+            getUXLikeResourcesPermissionsFromName(UXPermission.UX_LIKE_RD_PERM, UXPermission.UX_LIKE_U_ACTOR_TYPE);
+        } catch (NoResultException e) {
+            em.getTransaction().begin();
+            UXPermission readUPerm = new UXPermission().setNameR(UXPermission.UX_LIKE_RD_PERM+"."+UXPermission.UX_LIKE_U_ACTOR_TYPE);
+            em.persist(readUPerm);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.close();
+            throw e;
+        }
+
+        try {
+            getUXLikeResourcesPermissionsFromName(UXPermission.UX_LIKE_RD_PERM, UXPermission.UX_LIKE_G_ACTOR_TYPE);
+        } catch (NoResultException e) {
+            em.getTransaction().begin();
+            UXPermission readUPerm = new UXPermission().setNameR(UXPermission.UX_LIKE_RD_PERM+"."+UXPermission.UX_LIKE_G_ACTOR_TYPE);
+            em.persist(readUPerm);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.close();
+            throw e;
+        }
+
+        try {
+            getUXLikeResourcesPermissionsFromName(UXPermission.UX_LIKE_RD_PERM, UXPermission.UX_LIKE_O_ACTOR_TYPE);
+        } catch (NoResultException e) {
+            em.getTransaction().begin();
+            UXPermission readUPerm = new UXPermission().setNameR(UXPermission.UX_LIKE_RD_PERM+"."+UXPermission.UX_LIKE_O_ACTOR_TYPE);
+            em.persist(readUPerm);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.close();
+            throw e;
+        }
+
+        try {
+            getUXLikeResourcesPermissionsFromName(UXPermission.UX_LIKE_WR_PERM, UXPermission.UX_LIKE_U_ACTOR_TYPE);
+        } catch (NoResultException e) {
+            em.getTransaction().begin();
+            UXPermission readUPerm = new UXPermission().setNameR(UXPermission.UX_LIKE_WR_PERM+"."+UXPermission.UX_LIKE_U_ACTOR_TYPE);
+            em.persist(readUPerm);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.close();
+            throw e;
+        }
+
+        try {
+            getUXLikeResourcesPermissionsFromName(UXPermission.UX_LIKE_WR_PERM, UXPermission.UX_LIKE_G_ACTOR_TYPE);
+        } catch (NoResultException e) {
+            em.getTransaction().begin();
+            UXPermission readUPerm = new UXPermission().setNameR(UXPermission.UX_LIKE_WR_PERM+"."+UXPermission.UX_LIKE_G_ACTOR_TYPE);
+            em.persist(readUPerm);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.close();
+            throw e;
+        }
+
+        try {
+            getUXLikeResourcesPermissionsFromName(UXPermission.UX_LIKE_WR_PERM, UXPermission.UX_LIKE_O_ACTOR_TYPE);
+        } catch (NoResultException e) {
+            em.getTransaction().begin();
+            UXPermission readUPerm = new UXPermission().setNameR(UXPermission.UX_LIKE_WR_PERM+"."+UXPermission.UX_LIKE_O_ACTOR_TYPE);
+            em.persist(readUPerm);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.close();
+            throw e;
+        }
+
+        try {
+            getUXLikeResourcesPermissionsFromName(UXPermission.UX_LIKE_CH_PERM, UXPermission.UX_LIKE_U_ACTOR_TYPE);
+        } catch (NoResultException e) {
+            em.getTransaction().begin();
+            UXPermission readUPerm = new UXPermission().setNameR(UXPermission.UX_LIKE_CH_PERM+"."+UXPermission.UX_LIKE_U_ACTOR_TYPE);
+            em.persist(readUPerm);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.close();
+            throw e;
+        }
+
+        try {
+            getUXLikeResourcesPermissionsFromName(UXPermission.UX_LIKE_CH_PERM, UXPermission.UX_LIKE_G_ACTOR_TYPE);
+        } catch (NoResultException e) {
+            em.getTransaction().begin();
+            UXPermission readUPerm = new UXPermission().setNameR(UXPermission.UX_LIKE_CH_PERM+"."+UXPermission.UX_LIKE_G_ACTOR_TYPE);
+            em.persist(readUPerm);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.close();
+            throw e;
+        }
+
+        try {
+            getUXLikeResourcesPermissionsFromName(UXPermission.UX_LIKE_CH_PERM, UXPermission.UX_LIKE_O_ACTOR_TYPE);
+        } catch (NoResultException e) {
+            em.getTransaction().begin();
+            UXPermission readUPerm = new UXPermission().setNameR(UXPermission.UX_LIKE_CH_PERM+"."+UXPermission.UX_LIKE_O_ACTOR_TYPE);
+            em.persist(readUPerm);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.close();
+            throw e;
+        }
+    }
+
     /**
      * init in memory h2 db - for dev only
      */
@@ -116,6 +222,7 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
         } catch (NoResultException e) {
             log.debug("root user will be defined ...");
         } catch (Exception e) {
+            em.close();
             throw e;
         }
 
@@ -132,6 +239,11 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
             em.flush();
             em.getTransaction().commit();
         }
+
+        initUXPerms(em);
+
+        if (em.isOpen())
+            em.close();
     }
 
     /**
@@ -161,8 +273,10 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
                 role = jediQuery.getSingleResult();
             } catch (NoResultException e) {
                 log.warn("Jedi role has not been defined correctly ! You may have some problem during installation... ");
+                em.close();
                 return;
             } catch (Exception e) {
+                em.close();
                 throw e;
             }
 
@@ -175,6 +289,7 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
             } catch (NoResultException e) {
                 group = new Group().setNameR("yoda").setDescriptionR("yoda personal group");
             } catch (Exception e) {
+                em.close();
                 throw e;
             }
 
@@ -194,6 +309,11 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
             em.getTransaction().commit();
             log.warn("THIS IS YOUR FIRST ARIANE USAGE. A FAKE USER HAS BEEN CREATED WITH FULL RIGHTS (yoda / secret). YOU MUST AT LEAST CHANGE ITS PASSWORD OR CREATE NEW USER AND REMOVE THIS ONE !!!");
         }
+
+        initUXPerms(em);
+
+        if (em.isOpen())
+            em.close();
     }
 
     private void start() {
@@ -261,13 +381,13 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
     public EntityManager createEM() {
         log.debug("Create new entity manager from : \n\t{}\n\t{}\n\t{}\n\t{}\n\t{}\n\t{}\n\t{}",
                          new Object[]{
-                                             (Thread.currentThread().getStackTrace().length>0) ? Thread.currentThread().getStackTrace()[0].getClassName() : "",
-                                             (Thread.currentThread().getStackTrace().length>1) ? Thread.currentThread().getStackTrace()[1].getClassName() : "",
-                                             (Thread.currentThread().getStackTrace().length>2) ? Thread.currentThread().getStackTrace()[2].getClassName() : "",
-                                             (Thread.currentThread().getStackTrace().length>3) ? Thread.currentThread().getStackTrace()[3].getClassName() : "",
-                                             (Thread.currentThread().getStackTrace().length>4) ? Thread.currentThread().getStackTrace()[4].getClassName() : "",
-                                             (Thread.currentThread().getStackTrace().length>5) ? Thread.currentThread().getStackTrace()[5].getClassName() : "",
-                                             (Thread.currentThread().getStackTrace().length>6) ? Thread.currentThread().getStackTrace()[6].getClassName() : ""
+                                             (Thread.currentThread().getStackTrace().length > 0) ? Thread.currentThread().getStackTrace()[0].getClassName() : "",
+                                             (Thread.currentThread().getStackTrace().length > 1) ? Thread.currentThread().getStackTrace()[1].getClassName() : "",
+                                             (Thread.currentThread().getStackTrace().length > 2) ? Thread.currentThread().getStackTrace()[2].getClassName() : "",
+                                             (Thread.currentThread().getStackTrace().length > 3) ? Thread.currentThread().getStackTrace()[3].getClassName() : "",
+                                             (Thread.currentThread().getStackTrace().length > 4) ? Thread.currentThread().getStackTrace()[4].getClassName() : "",
+                                             (Thread.currentThread().getStackTrace().length > 5) ? Thread.currentThread().getStackTrace()[5].getClassName() : "",
+                                             (Thread.currentThread().getStackTrace().length > 6) ? Thread.currentThread().getStackTrace()[6].getClassName() : ""
                          });
         return sharedEMF.createEntityManager();
     }
@@ -284,5 +404,24 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
         log.debug("Reinit shared entity manager factory because new persistence bundle has been added {}...", persistenceBundle.getSymbolicName());
         sharedEMF.close();
         sharedEMF = persistenceProvider.createEntityManagerFactory(IDM_TXPERSISTENCE_PERSISTENCE_UNIT_NAME, hibernateConf);
+    }
+
+    @Override
+    public UXPermission getUXLikeResourcesPermissionsFromName(String name, String actorType) {
+        EntityManager em = this.createEM();
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<UXPermission> uxpermCriteria = builder.createQuery(UXPermission.class);
+        Root<UXPermission> uxpermRoot = uxpermCriteria.from(UXPermission.class);
+        uxpermCriteria = uxpermCriteria.select(uxpermRoot).where(builder.equal(uxpermRoot.<String>get("name"), name+"."+actorType));
+        TypedQuery<UXPermission> permQuery = em.createQuery(uxpermCriteria);
+        UXPermission perm = null;
+        try {
+            perm = permQuery.getSingleResult();
+        } catch (Exception e) {
+            em.close();
+            throw e;
+        }
+        em.close();
+        return perm;
     }
 }
