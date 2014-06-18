@@ -181,7 +181,7 @@ INSERT IGNORE INTO `role` (description, roleName, version) VALUES
     ('security administrator role','secadmin',1),
     ('security reviewer role','secreviewer',1),
     ('databases administrator role','dbadmin',1),
-    ('virgo administrator role','ccvirgoadmin',1);
+    ('virgo administrator role','virgoadmin',1);
 UNLOCK TABLES;
 
 
@@ -291,7 +291,7 @@ INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
 SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='virgoConsole:display' AND r.roleName='Jedi';
 
 INSERT IGNORE INTO `permission_role` (permission_id, roles_id)
-SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='virgoConsole:display' AND r.roleName='ccvirgoadmin';
+SELECT p.id, r.id FROM permission AS p, role AS r WHERE p.permissionName='virgoConsole:display' AND r.roleName='virgoadmin';
 
 UNLOCK TABLES;
 
@@ -394,5 +394,5 @@ SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='SQLCon
 INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
 SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='neo4JConsole:display' AND r.roleName='dbadmin';
 INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
-SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='virgoConsole:display' AND r.roleName='ccvirgoadmin';
+SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='virgoConsole:display' AND r.roleName='virgoadmin';
 UNLOCK TABLES;
