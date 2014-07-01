@@ -39,9 +39,9 @@ import org.slf4j.LoggerFactory;
 import java.io.InputStream;
 
 /**
- * This service target is the Shiro system sharing accross CC components.<br/><br/>
+ * This service target is the Shiro system sharing across Ariane components.<br/><br/>
  *
- * This is the iPojo implementation of {@link net.echinopsii.ariane.community.core.idm.base.proxy.WebSecurityManagerProxy}. The component is instantiated at commons-services bundle startup.
+ * This is the iPojo implementation of {@link net.echinopsii.ariane.community.core.idm.base.proxy.WebSecurityManagerProxy}. The component is instantiated during IDM base bundle startup.
  * It provides the {@link net.echinopsii.ariane.community.core.idm.base.proxy.WebSecurityManagerProxy} service.
  */
 @Component

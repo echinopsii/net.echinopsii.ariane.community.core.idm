@@ -1,6 +1,6 @@
 /**
- * [DEFINE YOUR PROJECT NAME/MODULE HERE]
- * [DEFINE YOUR PROJECT DESCRIPTION HERE] 
+ * IDM base bundle
+ * UX Permission model implementation
  * Copyright (C) 6/17/14 echinopsii
  *
  * This program is free software: you can redistribute it and/or modify

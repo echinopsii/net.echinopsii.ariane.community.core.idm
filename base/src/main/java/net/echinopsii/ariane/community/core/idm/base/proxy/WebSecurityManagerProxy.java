@@ -22,7 +22,7 @@ import org.apache.shiro.web.config.WebIniSecurityManagerFactory;
 import org.apache.shiro.web.mgt.WebSecurityManager;
 
 /**
- * This service target is the Shiro system sharing accross CC components.
+ * This service target is the Shiro system sharing across Ariane components.
  */
 public interface WebSecurityManagerProxy {
     /**
