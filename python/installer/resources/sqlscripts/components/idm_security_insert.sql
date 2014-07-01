@@ -396,3 +396,14 @@ SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='neo4JC
 INSERT IGNORE INTO `role_permission` (role_id, permissions_id)
 SELECT r.id, p.id FROM permission AS p, role AS r WHERE p.permissionName='virgoConsole:display' AND r.roleName='virgoadmin';
 UNLOCK TABLES;
+
+
+LOCK TABLES `ccGroup` WRITE;
+INSERT INTO `ccGroup` VALUES (7,'yoda personal group','yoda',1),(8,'mapping dsl sample writter group','mdslsampler',3),(9,'mapping dsl registry admin group','mdslregadmin',3);
+UNLOCK TABLES;
+
+
+LOCK TABLES `user` WRITE;
+INSERT INTO `user` VALUES (1,'yoda@echinopsii.net','Yoda','ZeOne','','','6969696969','yoda',1);
+UNLOCK TABLES;
+

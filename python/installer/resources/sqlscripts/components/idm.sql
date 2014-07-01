@@ -247,3 +247,17 @@ CREATE TABLE IF NOT EXISTS `user_preference` (
   CONSTRAINT `FK_s5oeayykfc7bpkpdwyrffwcqx` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FK_1hsmbum1i2qmgt7mtyvjk6vr4` FOREIGN KEY (`preferences_id`) REFERENCES `preference` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+--
+-- Table structure for table `uxpermission`
+--
+
+CREATE TABLE IF NOT EXISTS `uxpermission` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `permissionName` varchar(255) DEFAULT NULL,
+  `version` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_l681vgaghr2xm7mdis5tq5vox` (`permissionName`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;

@@ -250,9 +250,10 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
      * init db if no user already defined (ie : just after install) : create yoda jedi user
      */
     private void initDB() {
-        User  user  = null;
-        Role  role  = null;
-        Group group = null;
+        User  user       = null;
+        Role  role       = null;
+        Group group      = null;
+        boolean initUser = false;
 
         EntityManager em = this.createEM();
         CriteriaBuilder builder = em.getCriteriaBuilder();
@@ -263,8 +264,33 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
         int rowCount = (int) (long) em.createQuery(countCriteria).getSingleResult();
 
         if (rowCount == 0) {
-            log.warn("No admin user has been defined during installation ! You may have some problem during installation... ");
-            log.warn("Try to define a fake admin user to let you play with Ariane !");
+            user = new User().setUserNameR("yoda").setFirstNameR("Yoda").setLastNameR("ZeOne").setEmailR("yoda@echinopsii.net").setPhoneR("6969696969").setPasswordR("secret");
+            initUser = true;
+        } else if (rowCount == 1) {
+            CriteriaQuery<User> yodaCriteria = builder.createQuery(User.class);
+            Root<User> yodaRoot = yodaCriteria.from(User.class);
+            yodaCriteria.select(yodaRoot).where(builder.equal(yodaRoot.<String>get("userName"), "yoda"));
+            TypedQuery<User> jediQuery = em.createQuery(yodaCriteria);
+
+            try {
+                user = jediQuery.getSingleResult();
+            } catch (NoResultException e) {
+                log.warn("Jedi user has not been defined correctly ! You may have some problem during installation... ");
+                user = new User().setUserNameR("yoda").setFirstNameR("Yoda").setLastNameR("ZeOne").setEmailR("yoda@echinopsii.net").setPhoneR("6969696969").setPasswordR("secret");
+                initUser = true;
+            } catch (Exception e) {
+                em.close();
+                throw e;
+            }
+
+            if (user.getPasswordSalt().equals("") || user.getPasswordSalt()==null ||
+                user.getPassword().equals("") || user.getPassword() == null) {
+                user.setPassword("secret");
+                initUser = true;
+            }
+        }
+
+        if (initUser) {
             CriteriaQuery<Role> jediCriteria = builder.createQuery(Role.class);
             Root<Role> jediRoot = jediCriteria.from(Role.class);
             jediCriteria.select(jediRoot).where(builder.equal(jediRoot.<String>get("name"), "Jedi"));
@@ -293,7 +319,7 @@ public class IDMJPAProviderImpl implements IDMJPAProvider {
                 throw e;
             }
 
-            user = new User().setUserNameR("yoda").setFirstNameR("Yoda").setLastNameR("ZeOne").setEmailR("yoda@echinopsii.net").setPhoneR("6969696969").setPasswordR("secret");
+
             em.getTransaction().begin();
             em.persist(user);
             em.persist(group);
