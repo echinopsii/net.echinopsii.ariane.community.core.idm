@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-        <!-- General information -->
-{% block attributes %}
+    
+    <!-- General information -->
+    {%- block attributes %}
     <groupId>{{ groupId }}</groupId>
     <artifactId>{{ artifactId }}</artifactId>
     <version>{{ version }}</version>
     <name>Ariane Community Core IDM Parent</name>
     <packaging>{{ packaging }}</packaging>
-{% endblock %}
-{% block modules %}
+    {% endblock %}
+    {% block modules -%}
     <modules>
-        {%- for mod in modules %}
+        {% for mod in modules -%}
         <module>{{mod.name}}</module>
         {% endfor -%}
     </modules>
-{% endblock %}
- <repositories>
+    {% endblock %}
+    <repositories>
         <repository>
             <id>nexus.echinopsii.net</id>
             <name>echinopsii.net repository</name>
@@ -71,281 +72,259 @@
         <version.license.plugin>1.5</version.license.plugin>
         <version.war.plugin>2.1.1</version.war.plugin>
         <version.ipojo.plugin>1.11.0</version.ipojo.plugin>
-
-{% block dependencies -%}
-    <!-- Ariane module dependencies -->
-    {% for d in dependencies -%}
-    {% if d.module.type == 'none' %}
-        <version.net.echinopsii.ariane.{{ d.module.name }}>{{ d.version }}</version.net.echinopsii.ariane.{{ d.module.name }}>
-        <version.net.echinopsii.ariane.{{ d.module.name }}.min>{{ d.version_min }} </version.net.echinopsii.ariane.{{ d.module.name }}.min>
-        <version.net.echinopsii.ariane.{{ d.module.name }}.max>{{ d.version_max }} </version.net.echinopsii.ariane.{{ d.module.name }}.max>
-    {% else %}
-        <version.net.echinopsii.ariane.{{ d.module.type}}.{{ d.module.name }}>{{ d.version }}</version.net.echinopsii.ariane.{{ d.module.type}}.{{ d.module.name }}>
-        <version.net.echinopsii.ariane.{{ d.module.type}}.{{ d.module.name }}.min>{{ d.version_min }}</version.net.echinopsii.ariane.{{ d.module.type}}.{{ d.module.name }}.min>
-        <version.net.echinopsii.ariane.{{ d.module.type}}.{{ d.module.name }}.max>{{ d.version_max }}</version.net.echinopsii.ariane.{{ d.module.type}}.{{ d.module.name }}.max>
-    {% endif %}
-    {%- endfor %}
-{%- endblock %}
-
+        
+        <!-- Dependencies versions-->
+        <version.org.apache.shiro>1.2.2</version.org.apache.shiro>
 
         <!-- Dependencies versions-->
-                <version.org.apache.shiro>1.2.2</version.org.apache.shiro>
+        <version.javax.annotations.jsr250-api>1.0</version.javax.annotations.jsr250-api>
+        <version.org.apache.shiro>1.2.2</version.org.apache.shiro>
 
-                <!-- Dependencies versions-->
-                <version.javax.annotations.jsr250-api>1.0</version.javax.annotations.jsr250-api>
-                <version.org.apache.shiro>1.2.2</version.org.apache.shiro>
+        <!-- JPA / JTA / Hibernate-->
+        <version.javax.transaction.jta>1.1</version.javax.transaction.jta>
+        <version.javax.validation.validation-api>1.0.0.GA</version.javax.validation.validation-api>
+        <version.com.h2db>1.3.170</version.com.h2db>
+        <version.org.hibernate>4.3.0.Final</version.org.hibernate>
+        <version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api>1.0.0.Final</version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api>
 
-                <!-- JPA / JTA / Hibernate-->
-                <version.javax.transaction.jta>1.1</version.javax.transaction.jta>
-                <version.javax.validation.validation-api>1.0.0.GA</version.javax.validation.validation-api>
-                <version.com.h2db>1.3.170</version.com.h2db>
-                <version.org.hibernate>4.3.0.Final</version.org.hibernate>
-                <version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api>1.0.0.Final</version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api>
+        <!-- Technical stuff -->
+        <version.commons.beanutils>1.8.3</version.commons.beanutils>
+        <version.org.apache.ipojo>1.11.0</version.org.apache.ipojo>
+        <version.org.slf4j>1.6.4</version.org.slf4j>
 
-                <!-- Technical stuff -->
-                <version.commons.beanutils>1.8.3</version.commons.beanutils>
-                <version.org.apache.ipojo>1.11.0</version.org.apache.ipojo>
-                <version.org.slf4j>1.6.4</version.org.slf4j>
+        <!-- OSGI Min/Max versions -->
+        <version.osgimin.org.osgi.framework>1.5</version.osgimin.org.osgi.framework>
+        <version.osgimax.org.osgi.framework>2</version.osgimax.org.osgi.framework>
+        <version.osgimin.org.osgi.util.tracker>1.4</version.osgimin.org.osgi.util.tracker>
+        <version.osgimax.org.osgi.util.tracker>2</version.osgimax.org.osgi.util.tracker>
+        <version.osgimin.org.osgi.service.cm>1.3.0</version.osgimin.org.osgi.service.cm>
+        <version.osgimax.org.osgi.service.cm>2</version.osgimax.org.osgi.service.cm>
+        <version.osgimin.org.jboss.resteasy>2.3.6</version.osgimin.org.jboss.resteasy>
+        <version.osgimax.org.jboss.resteasy>2.4</version.osgimax.org.jboss.resteasy>
+        <version.osgimin.javax.servlet-api>3.0.0</version.osgimin.javax.servlet-api>
+        <version.osgimax.javax.servlet-api>3.1.0</version.osgimax.javax.servlet-api>
+        <version.osgimin.javax.persistence>2.0.0</version.osgimin.javax.persistence>
+        <version.osgimax.javax.persistence>3.0.0</version.osgimax.javax.persistence>
+        <version.osgimin.hibernate>4.2.8</version.osgimin.hibernate>
+        <version.osgimax.hibernate>5.0.0</version.osgimax.hibernate>
 
-                <!-- OSGI Min/Max versions -->
-                <version.osgimin.org.osgi.framework>1.5</version.osgimin.org.osgi.framework>
-                <version.osgimax.org.osgi.framework>2</version.osgimax.org.osgi.framework>
+        <!-- jUnit test version -->
+        <version.junit.junit>4.11</version.junit.junit>
+    </properties>
 
-                <version.osgimin.org.osgi.util.tracker>1.4</version.osgimin.org.osgi.util.tracker>
-                <version.osgimax.org.osgi.util.tracker>2</version.osgimax.org.osgi.util.tracker>
-
-                <version.osgimin.org.osgi.service.cm>1.3.0</version.osgimin.org.osgi.service.cm>
-                <version.osgimax.org.osgi.service.cm>2</version.osgimax.org.osgi.service.cm>
-
-                <version.osgimin.org.jboss.resteasy>2.3.6</version.osgimin.org.jboss.resteasy>
-                <version.osgimax.org.jboss.resteasy>2.4</version.osgimax.org.jboss.resteasy>
-
-                <version.osgimin.javax.servlet-api>3.0.0</version.osgimin.javax.servlet-api>
-                <version.osgimax.javax.servlet-api>3.1.0</version.osgimax.javax.servlet-api>
-
-                <version.osgimin.javax.persistence>2.0.0</version.osgimin.javax.persistence>
-                <version.osgimax.javax.persistence>3.0.0</version.osgimax.javax.persistence>
-
-                <version.osgimin.hibernate>4.2.8</version.osgimin.hibernate>
-                <version.osgimax.hibernate>5.0.0</version.osgimax.hibernate>
-
-                <!-- jUnit test version -->
-                <version.junit.junit>4.11</version.junit.junit>
-            </properties>
-
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.apache.felix</groupId>
-                            <artifactId>maven-bundle-plugin</artifactId>
-                            <version>${version.bundle.plugin}</version>
-                            <extensions>true</extensions>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-antrun-plugin</artifactId>
-                            <version>${version.antrun.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-assembly-plugin</artifactId>
-                            <version>${version.assembly.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-dependency-plugin</artifactId>
-                            <version>${version.dependency.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-clean-plugin</artifactId>
-                            <version>${version.clean.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-compiler-plugin</artifactId>
-                            <version>${version.compiler.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-deploy-plugin</artifactId>
-                            <version>${version.deploy.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-install-plugin</artifactId>
-                            <version>${version.install.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-jar-plugin</artifactId>
-                            <version>${version.jar.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-javadoc-plugin</artifactId>
-                            <version>${version.javadoc.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-release-plugin</artifactId>
-                            <version>${version.release.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-resources-plugin</artifactId>
-                            <version>${version.resources.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-source-plugin</artifactId>
-                            <version>${version.source.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-surefire-plugin</artifactId>
-                            <version>${version.surefire.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.codehaus.mojo</groupId>
-                            <artifactId>build-helper-maven-plugin</artifactId>
-                            <version>${version.build.helper.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.codehaus.mojo</groupId>
-                            <artifactId>license-maven-plugin</artifactId>
-                            <version>${version.license.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-war-plugin</artifactId>
-                            <version>${version.war.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.jboss.as.plugins</groupId>
-                            <artifactId>jboss-as-maven-plugin</artifactId>
-                            <version>${version.jboss.maven.plugin}</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.felix</groupId>
-                            <artifactId>maven-ipojo-plugin</artifactId>
-                            <version>${version.ipojo.plugin}</version>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-
-            <dependencies>
-                <!--
-                <dependency>
-                    <groupId>org.apache.geronimo.components</groupId>
-                    <artifactId>geronimo-transaction</artifactId>
-                    <version>3.1.1</version>
-                </dependency>
-                -->
-                <dependency>
-                    <groupId>commons-beanutils</groupId>
-                    <artifactId>commons-beanutils</artifactId>
-                    <scope>provided</scope>
-                    <version>${version.commons.beanutils}</version>
-                </dependency>
-                <dependency>
-                    <groupId>com.h2database</groupId>
-                    <artifactId>h2</artifactId>
-                    <version>${version.com.h2db}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>javax.annotation</groupId>
-                    <artifactId>jsr250-api</artifactId>
-                    <scope>provided</scope>
-                    <version>${version.javax.annotations.jsr250-api}</version>
-                </dependency>
-                <dependency>
-                    <groupId>javax.transaction</groupId>
-                    <artifactId>jta</artifactId>
-                    <version>${version.javax.transaction.jta}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>javax.validation</groupId>
-                    <artifactId>validation-api</artifactId>
-                    <version>${version.javax.validation.validation-api}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
                     <groupId>org.apache.felix</groupId>
-                    <artifactId>org.apache.felix.ipojo</artifactId>
-                    <version>${version.org.apache.ipojo}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <version>${version.bundle.plugin}</version>
+                    <extensions>true</extensions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>${version.antrun.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>${version.assembly.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${version.dependency.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${version.clean.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${version.compiler.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${version.deploy.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${version.install.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${version.jar.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${version.javadoc.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${version.release.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${version.resources.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${version.source.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${version.surefire.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${version.build.helper.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>${version.license.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${version.war.plugin}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jboss.as.plugins</groupId>
+                    <artifactId>jboss-as-maven-plugin</artifactId>
+                    <version>${version.jboss.maven.plugin}</version>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.felix</groupId>
-                    <artifactId>org.apache.felix.ipojo.annotations</artifactId>
-                    <version>${version.org.apache.ipojo}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.shiro</groupId>
-                    <artifactId>shiro-core</artifactId>
-                    <version>${version.org.apache.shiro}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.shiro</groupId>
-                    <artifactId>shiro-web</artifactId>
-                    <version>${version.org.apache.shiro}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>net.echinopsii.3rdparty.org.hibernate.hibernate-osgi</artifactId>
-                    <version>${version.org.hibernate}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>net.echinopsii.3rdparty.org.hibernate.hibernate-entitymanager</artifactId>
-                    <version>${version.org.hibernate}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>net.echinopsii.3rdparty.org.hibernate.hibernate-core</artifactId>
-                    <version>${version.org.hibernate}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.hibernate.javax.persistence</groupId>
-                    <artifactId>hibernate-jpa-2.1-api</artifactId>
-                    <version>${version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api}</version>
-                    <scope>provided</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                    <scope>provided</scope>
-                    <version>${version.org.slf4j}</version>
-                </dependency>
-                <dependency>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
-                    <version>${version.junit.junit}</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-
-            <reporting>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${version.javadoc.plugin}</version>
-                        <configuration>
-                            <nohelp>true</nohelp>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </reporting>
-        </project>
+                    <artifactId>maven-ipojo-plugin</artifactId>
+                    <version>${version.ipojo.plugin}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    
+    <dependencies>
+        <!--
+        <dependency>
+            <groupId>org.apache.geronimo.components</groupId>
+            <artifactId>geronimo-transaction</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <scope>provided</scope>
+            <version>${version.commons.beanutils}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${version.com.h2db}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>jsr250-api</artifactId>
+            <scope>provided</scope>
+            <version>${version.javax.annotations.jsr250-api}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+            <version>${version.javax.transaction.jta}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${version.javax.validation.validation-api}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.ipojo</artifactId>
+            <version>${version.org.apache.ipojo}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.ipojo.annotations</artifactId>
+            <version>${version.org.apache.ipojo}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${version.org.apache.shiro}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${version.org.apache.shiro}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>net.echinopsii.3rdparty.org.hibernate.hibernate-osgi</artifactId>
+            <version>${version.org.hibernate}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>net.echinopsii.3rdparty.org.hibernate.hibernate-entitymanager</artifactId>
+            <version>${version.org.hibernate}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>net.echinopsii.3rdparty.org.hibernate.hibernate-core</artifactId>
+            <version>${version.org.hibernate}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>${version.org.hibernate.javax.persistence.hibernate-jpa-2.1-api}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+            <version>${version.org.slf4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit.junit}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${version.javadoc.plugin}</version>
+                <configuration>
+                    <nohelp>true</nohelp>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+</project>
