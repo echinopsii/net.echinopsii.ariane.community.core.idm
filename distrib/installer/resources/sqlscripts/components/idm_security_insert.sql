@@ -399,11 +399,10 @@ UNLOCK TABLES;
 
 
 LOCK TABLES `ccGroup` WRITE;
-INSERT INTO `ccGroup` VALUES (7,'yoda personal group','yoda',1),(8,'mapping dsl sample writter group','mdslsampler',3),(9,'mapping dsl registry admin group','mdslregadmin',3);
+INSERT IGNORE INTO `ccGroup` VALUES (7,'yoda personal group','yoda',1),(8,'mapping dsl sample writter group','mdslsampler',3),(9,'mapping dsl registry admin group','mdslregadmin',3);
 UNLOCK TABLES;
 
 
 LOCK TABLES `user` WRITE;
-INSERT INTO `user` VALUES (1,'yoda@echinopsii.net','Yoda','ZeOne','','','6969696969','yoda',1);
+INSERT IGNORE INTO `user` VALUES (1,'yoda@echinopsii.net','Yoda','ZeOne','','','6969696969','yoda',1);
 UNLOCK TABLES;
-

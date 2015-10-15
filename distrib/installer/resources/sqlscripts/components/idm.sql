@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `role_user` (
 -- Table structure for table `user_role`
 --
 
-CREATE TABLE `user_role` (
+CREATE TABLE IF NOT EXISTS `user_role` (
   `user_id` bigint(20) NOT NULL,
   `roles_id` bigint(20) NOT NULL,
   PRIMARY KEY (`user_id`,`roles_id`),
