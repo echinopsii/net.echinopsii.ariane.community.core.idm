@@ -5,5 +5,5 @@
 				        http://www.eclipse.org/virgo/schema/plan 
 				        http://www.eclipse.org/virgo/schema/plan/eclipse-virgo-plan.xsd">
 	<artifact type="configuration" name="net.echinopsii.ariane.community.core.IDMJPAProviderManagedService"/>
-    <artifact type="bundle" name="net.echinopsii.ariane.community.core.idm.base" version="[0.4.0,0.5.0)"/>
+	<artifact type="bundle" name="net.echinopsii.ariane.community.core.idm.base" version="[0.4.0,0.5.0)"/>
 </plan>
