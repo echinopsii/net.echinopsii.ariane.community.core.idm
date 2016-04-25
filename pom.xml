@@ -5,7 +5,7 @@
     <!-- General information -->
     <groupId>net.echinopsii.ariane.community.core</groupId>
     <artifactId>net.echinopsii.ariane.community.core.idm</artifactId>
-    <version>0.4.3</version>
+    <version>0.4.4-SNAPSHOT</version>
     <name>Ariane Community Core IDM Parent</name>
     <packaging>pom</packaging>
     
