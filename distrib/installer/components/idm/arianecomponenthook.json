@@ -2,7 +2,7 @@
     "order": 0,
     "hook": {
         "package": "components.idm",
-        "module": "idmProcessor",
-        "class": "idmProcessor"
+        "module": "IdmProcessor",
+        "class": "IdmProcessor"
     }
 }

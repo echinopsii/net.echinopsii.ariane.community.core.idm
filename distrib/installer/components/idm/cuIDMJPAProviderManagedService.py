@@ -1,6 +1,6 @@
 # installer idm JPA provider configuration parameters
 #
-# Copyright (C) 2014 Mathilde Ffrench
+# Copyright (C) 2014 echinopsii
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -22,10 +22,10 @@ from mysql.connector import errorcode
 from tools.AConfParamNotNone import AConfParamNotNone
 from tools.AConfUnit import AConfUnit
 
-__author__ = 'echinopsii'
+__author__ = 'mffrench'
 
 
-class cpHibernateConnectionPassword(AConfParamNotNone):
+class CPHibernateConnectionPassword(AConfParamNotNone):
 
     name = "##hibernateConnectionPassword"
     description = "IDM DB connection password"
@@ -34,8 +34,11 @@ class cpHibernateConnectionPassword(AConfParamNotNone):
     def __init__(self):
         self.value = None
 
+    def is_valid(self):
+        return super(CPHibernateConnectionPassword, self).is_valid()
 
-class cpHibernateConnectionURL(AConfParamNotNone):
+
+class CPHibernateConnectionURL(AConfParamNotNone):
 
     name = "##hibernateConnectionURL"
     description = "IDM DB connection URL"
@@ -44,8 +47,11 @@ class cpHibernateConnectionURL(AConfParamNotNone):
     def __init__(self):
         self.value = None
 
+    def is_valid(self):
+        return super(CPHibernateConnectionURL, self).is_valid()
 
-class cpHibernateConnectionUsername(AConfParamNotNone):
+
+class CPHibernateConnectionUsername(AConfParamNotNone):
 
     name = "##hibernateConnectionUsername"
     description = "IDM DB username"
@@ -54,8 +60,11 @@ class cpHibernateConnectionUsername(AConfParamNotNone):
     def __init__(self):
         self.value = None
 
+    def is_valid(self):
+        return super(CPHibernateConnectionUsername, self).is_valid()
 
-class cpHibernateDialect(AConfParamNotNone):
+
+class CPHibernateDialect(AConfParamNotNone):
 
     name = "##hibernateDialect"
     description = "IDM DB dialect"
@@ -64,8 +73,11 @@ class cpHibernateDialect(AConfParamNotNone):
     def __init__(self):
         self.value = None
 
+    def is_valid(self):
+        return super(CPHibernateDialect, self).is_valid()
 
-class cpHibernateDriverClass(AConfParamNotNone):
+
+class CPHibernateDriverClass(AConfParamNotNone):
 
     name = "##hibernateDriverClass"
     description = "IDM DB driver class"
@@ -74,8 +86,11 @@ class cpHibernateDriverClass(AConfParamNotNone):
     def __init__(self):
         self.value = None
 
+    def is_valid(self):
+        return super(CPHibernateDriverClass, self).is_valid()
 
-class cpHibernateCacheInfinispanCfg(AConfParamNotNone):
+
+class CPHibernateCacheInfinispanCfg(AConfParamNotNone):
 
     name = "##hibernateCacheInfinispanCfg"
     description = "IDM DB L2 cache infinispan config"
@@ -84,164 +99,218 @@ class cpHibernateCacheInfinispanCfg(AConfParamNotNone):
     def __init__(self):
         self.value = None
 
+    def is_valid(self):
+        return super(CPHibernateCacheInfinispanCfg, self).is_valid()
 
-class cuIDMJPAProviderManagedServiceProcessor(AConfUnit):
 
-    def __init__(self, targetConfDir):
+class CUIDMJPAProviderManagedServiceProcessor(AConfUnit):
+
+    def __init__(self, target_conf_dir):
         self.confUnitName = "IDM JPA provider"
-        self.confTemplatePath = os.path.abspath("resources/templates/components/net.echinopsii.ariane.community.core.IDMJPAProviderManagedService.properties.tpl")
-        self.confFinalPath = targetConfDir + "net.echinopsii.ariane.community.core.IDMJPAProviderManagedService.properties"
-        hibernateDriverClass = cpHibernateDriverClass()
-        hibernateDialect = cpHibernateDialect()
-        hibernateConnectionURL = cpHibernateConnectionURL()
-        hibernateConnectionUsername = cpHibernateConnectionUsername()
-        hibernateConnectionPassword = cpHibernateConnectionPassword()
+        self.confTemplatePath = os.path.abspath(
+            "resources/templates/components/"
+            "net.echinopsii.ariane.community.core.IDMJPAProviderManagedService.properties.tpl"
+        )
+        self.confFinalPath = target_conf_dir + \
+            "net.echinopsii.ariane.community.core.IDMJPAProviderManagedService.properties"
+        hibernate_driver_class = CPHibernateDriverClass()
+        hibernate_dialect = CPHibernateDialect()
+        hibernate_connection_url = CPHibernateConnectionURL()
+        hibernate_connection_username = CPHibernateConnectionUsername()
+        hibernate_connection_password = CPHibernateConnectionPassword()
         self.paramsDictionary = {
-            hibernateDriverClass.name: hibernateDriverClass,
-            hibernateDialect.name: hibernateDialect,
-            hibernateConnectionURL.name: hibernateConnectionURL,
-            hibernateConnectionUsername.name: hibernateConnectionUsername,
-            hibernateConnectionPassword.name: hibernateConnectionPassword
+            hibernate_driver_class.name: hibernate_driver_class,
+            hibernate_dialect.name: hibernate_dialect,
+            hibernate_connection_url.name: hibernate_connection_url,
+            hibernate_connection_username.name: hibernate_connection_username,
+            hibernate_connection_password.name: hibernate_connection_password
         }
 
+    def process(self):
+        return super(CUIDMJPAProviderManagedServiceProcessor, self).process()
 
-class idmJPAProviderManagedServiceSyringe:
+    def get_param_from_key(self, key):
+        return super(CUIDMJPAProviderManagedServiceProcessor, self).get_param_from_key(key)
 
-    def __init__(self, targetConfDif, silent):
+    def get_params_keys_list(self):
+        return super(CUIDMJPAProviderManagedServiceProcessor, self).get_params_keys_list()
+
+    def set_key_param_value(self, key, value):
+        return super(CUIDMJPAProviderManagedServiceProcessor, self).set_key_param_value(key, value)
+
+
+class IDMJPAProviderManagedServiceSyringe:
+
+    def __init__(self, target_conf_dir, silent):
         self.silent = silent
-        self.idmJPAProviderManagedServiceCUProcessor = cuIDMJPAProviderManagedServiceProcessor(targetConfDif)
-        idmJPAProviderManagedServiceCUJSON = open("resources/configvalues/components/cuIDMJPAProviderManagedService.json")
-        self.idmJPAProviderManagedServiceCUValues = json.load(idmJPAProviderManagedServiceCUJSON)
-        idmJPAProviderManagedServiceCUJSON.close()
+        self.idmJPAProviderManagedServiceCUProcessor = CUIDMJPAProviderManagedServiceProcessor(target_conf_dir)
+        idm_jpa_provider_managed_service_cujson = open(
+            "resources/configvalues/components/cuIDMJPAProviderManagedService.json"
+        )
+        self.idmJPAProviderManagedServiceCUValues = json.load(idm_jpa_provider_managed_service_cujson)
+        idm_jpa_provider_managed_service_cujson.close()
         self.dbConfig = None
 
-    def shootBuilder(self):
-        idmJPAProviderCacheInfinispanCfgDefined = False
-        idmJPAProviderManagedServiceDBTypeDefined = False
-        idmJPAProviderManagedServiceConnectionDefined = False
-        for key in self.idmJPAProviderManagedServiceCUProcessor.getParamsKeysList():
+    def shoot_builder(self):
+        idm_jpa_provider_cache_infinispan_cfg_defined = False
+        idm_jpa_provider_managed_service_db_type_defined = False
+        idm_jpa_provider_managed_service_connection_defined = False
+        for key in self.idmJPAProviderManagedServiceCUProcessor.get_params_keys_list():
 
-            if (key == cpHibernateDriverClass.name or key == cpHibernateDialect.name) and not idmJPAProviderManagedServiceDBTypeDefined:
-                self.idmJPAProviderManagedServiceCUProcessor.setKeyParamValue(cpHibernateDriverClass.name, self.idmJPAProviderManagedServiceCUValues[cpHibernateDriverClass.name])
-                self.idmJPAProviderManagedServiceCUProcessor.setKeyParamValue(cpHibernateDialect.name, self.idmJPAProviderManagedServiceCUValues[cpHibernateDialect.name])
-                idmJPAProviderManagedServiceDBTypeDefined = True
+            if (key == CPHibernateDriverClass.name or key == CPHibernateDialect.name) and \
+                    not idm_jpa_provider_managed_service_db_type_defined:
+                self.idmJPAProviderManagedServiceCUProcessor.\
+                    set_key_param_value(
+                        CPHibernateDriverClass.name,
+                        self.idmJPAProviderManagedServiceCUValues[CPHibernateDriverClass.name]
+                    )
+                self.idmJPAProviderManagedServiceCUProcessor.\
+                    set_key_param_value(
+                        CPHibernateDialect.name,
+                        self.idmJPAProviderManagedServiceCUValues[CPHibernateDialect.name]
+                    )
+                idm_jpa_provider_managed_service_db_type_defined = True
 
-            elif (key == cpHibernateCacheInfinispanCfg.name) and not idmJPAProviderCacheInfinispanCfgDefined:
-                self.idmJPAProviderManagedServiceCUProcessor.setKeyParamValue(cpHibernateCacheInfinispanCfg.name, self.cacheConfPath)
-                idmJPAProviderCacheInfinispanCfgDefined = True
+            elif (key == CPHibernateCacheInfinispanCfg.name) and not idm_jpa_provider_cache_infinispan_cfg_defined:
+                self.idmJPAProviderManagedServiceCUProcessor.\
+                    set_key_param_value(
+                        CPHibernateCacheInfinispanCfg.name,
+                        self.cacheConfPath
+                    )
+                idm_jpa_provider_cache_infinispan_cfg_defined = True
 
-            elif (key == cpHibernateConnectionURL.name or key == cpHibernateConnectionUsername.name or key == cpHibernateConnectionPassword.name) and not idmJPAProviderManagedServiceConnectionDefined:
+            elif (key == CPHibernateConnectionURL.name or
+                  key == CPHibernateConnectionUsername.name or
+                  key == CPHibernateConnectionPassword.name) \
+                    and not idm_jpa_provider_managed_service_connection_defined:
 
-                tmpurl = self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionURL.name].split("://")[1]
+                tmp_url = self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionURL.name].split("://")[1]
 
-                dbServerFQDNDefault = tmpurl.split(":")[0]
-                dbServerFQDNDefaultUI = "[default - " + dbServerFQDNDefault + "] "
+                db_server_fqdn_default = tmp_url.split(":")[0]
+                db_server_fqdn_default_ui = "[default - " + db_server_fqdn_default + "] "
 
-                tmpurl = tmpurl.split(":")[1]
+                tmp_url = tmp_url.split(":")[1]
 
-                dbServerPortDefault = tmpurl.split("/")[0]
-                dbServerPortDefaultUI = "[default - " + dbServerPortDefault + "] "
+                db_server_port_default = tmp_url.split("/")[0]
+                db_server_port_default_ui = "[default - " + db_server_port_default + "] "
 
-                dbNameDefault = tmpurl.split("/")[1]
-                dbNameDefaultUI = "[default - " + dbNameDefault + "] "
+                db_name_default = tmp_url.split("/")[1]
+                db_name_default_ui = "[default - " + db_name_default + "] "
 
-                while not idmJPAProviderManagedServiceConnectionDefined:
+                while not idm_jpa_provider_managed_service_connection_defined:
 
                     if not self.silent:
-                        dbServerFQDN = input("%-- >> Define IDM DB FQDN " + dbServerFQDNDefaultUI + ": ")
-                        if dbServerFQDN == "" or dbServerFQDN is None:
-                            dbServerFQDN = dbServerFQDNDefault
+                        db_server_dqdn = input("%-- >> Define IDM DB FQDN " + db_server_fqdn_default_ui + ": ")
+                        if db_server_dqdn == "" or db_server_dqdn is None:
+                            db_server_dqdn = db_server_fqdn_default
                         else:
-                            dbServerFQDNDefaultUI = "[default - " + dbServerFQDN + "] "
-                            dbServerFQDNDefault = dbServerFQDN
+                            db_server_fqdn_default_ui = "[default - " + db_server_dqdn + "] "
+                            db_server_fqdn_default = db_server_dqdn
                     else:
-                        dbServerFQDN = dbServerFQDNDefault
+                        db_server_dqdn = db_server_fqdn_default
 
                     if not self.silent:
-                        serverPortIsValid = False
-                        dbServerPortStr = ""
-                        while not serverPortIsValid:
-                            dbServerPort = 0
-                            dbServerPortStr = input("%-- >> Define IDM DB port " + dbServerPortDefaultUI + ": ")
-                            if dbServerPortStr == "" or dbServerPortStr is None:
-                                dbServerPortStr = dbServerPortDefault
-                                dbServerPort = int(dbServerPortDefault)
-                                serverPortIsValid = True
+                        server_port_is_valid = False
+                        db_server_port_str = ""
+                        while not server_port_is_valid:
+                            db_server_port = 0
+                            db_server_port_str = input("%-- >> Define IDM DB port " + db_server_port_default_ui + ": ")
+                            if db_server_port_str == "" or db_server_port_str is None:
+                                db_server_port_str = db_server_port_default
+                                db_server_port = int(db_server_port_default)
+                                server_port_is_valid = True
                             else:
                                 try:
-                                    dbServerPort = int(dbServerPortStr)
-                                    if (dbServerPort <= 0) and (dbServerPort > 65535):
-                                        print("%-- !! Invalid DB port " + str(dbServerPort) + ": not in port range")
+                                    db_server_port = int(db_server_port_str)
+                                    if (db_server_port <= 0) and (db_server_port > 65535):
+                                        print("%-- !! Invalid DB port " + str(db_server_port) + ": not in port range")
                                     else:
-                                        dbServerPortDefaultUI = "[default - " + dbServerPortStr + "] "
-                                        dbServerPortDefault = dbServerPortStr
-                                        serverPortIsValid = True
+                                        db_server_port_default_ui = "[default - " + db_server_port_str + "] "
+                                        db_server_port_default = db_server_port_str
+                                        server_port_is_valid = True
                                 except ValueError:
-                                    print("%-- !! Invalid DB port " + dbServerPortStr + " : not a number")
+                                    print("%-- !! Invalid DB port " + db_server_port_str + " : not a number")
                     else:
-                        dbServerPortStr = dbServerPortDefault
-                        dbServerPort = int(dbServerPortStr)
+                        db_server_port_str = db_server_port_default
+                        db_server_port = int(db_server_port_str)
 
                     if not self.silent:
-                        dbNameIsValid = False
-                        dbName = ""
-                        while not dbNameIsValid:
-                            dbName = input("%-- >> Define IDM DB name " + dbNameDefaultUI + ": ")
-                            if dbName != "":
-                                dbNameIsValid = True
-                                dbNameDefault = dbName
-                                dbNameDefaultUI = "[default - " + dbName + "] "
-                            elif dbNameDefault != "":
-                                dbName = dbNameDefault
-                                dbNameIsValid = True
+                        db_name_is_valid = False
+                        db_name = ""
+                        while not db_name_is_valid:
+                            db_name = input("%-- >> Define IDM DB name " + db_name_default_ui + ": ")
+                            if db_name != "":
+                                db_name_is_valid = True
+                                db_name_default = db_name
+                                db_name_default_ui = "[default - " + db_name + "] "
+                            elif db_name_default != "":
+                                db_name = db_name_default
+                                db_name_is_valid = True
                     else:
-                        dbName = dbNameDefault
+                        db_name = db_name_default
 
                     if not self.silent:
-                        self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionURL.name] = "jdbc:mysql://" + dbServerFQDN + ":" + dbServerPortStr + "/" + dbName
-                    self.idmJPAProviderManagedServiceCUProcessor.setKeyParamValue(cpHibernateConnectionURL.name, self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionURL.name])
+                        self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionURL.name] = \
+                            "jdbc:mysql://" + db_server_dqdn + ":" + db_server_port_str + "/" + db_name
+                    self.idmJPAProviderManagedServiceCUProcessor.set_key_param_value(
+                        CPHibernateConnectionURL.name,
+                        self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionURL.name]
+                    )
 
                     if not self.silent:
-                        dbServerUsernameDefault = self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionUsername.name]
-                        dbServerUsernameDefaultUI = "[default - " + dbServerUsernameDefault + "] "
+                        db_server_username_default = self.idmJPAProviderManagedServiceCUValues[
+                            CPHibernateConnectionUsername.name
+                        ]
+                        db_server_username_default_ui = "[default - " + db_server_username_default + "] "
 
-                        dbServerUsernameIsValid = False
-                        while not dbServerUsernameIsValid:
-                            self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionUsername.name] = input("%-- >> Define IDM DB username " + dbServerUsernameDefaultUI + ": ")
-                            if self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionUsername.name] != "":
-                                dbServerUsernameIsValid = True
-                                dbServerUsernameDefault = self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionUsername.name]
-                                dbServerUsernameDefaultUI = "[default - " + dbServerUsernameDefault + "]"
-                            elif dbServerUsernameDefault != "":
-                                self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionUsername.name] = dbServerUsernameDefault
-                                dbServerUsernameIsValid = True
+                        db_server_username_is_valid = False
+                        while not db_server_username_is_valid:
+                            self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionUsername.name] = \
+                                input("%-- >> Define IDM DB username " + db_server_username_default_ui + ": ")
+                            if self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionUsername.name] != "":
+                                db_server_username_is_valid = True
+                                db_server_username_default = self.idmJPAProviderManagedServiceCUValues[
+                                    CPHibernateConnectionUsername.name
+                                ]
+                                db_server_username_default_ui = "[default - " + db_server_username_default + "]"
+                            elif db_server_username_default != "":
+                                self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionUsername.name] = \
+                                    db_server_username_default
+                                db_server_username_is_valid = True
                     else:
-                        self.idmJPAProviderManagedServiceCUProcessor.setKeyParamValue(cpHibernateConnectionUsername.name, self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionUsername.name])
+                        self.idmJPAProviderManagedServiceCUProcessor.set_key_param_value(
+                            CPHibernateConnectionUsername.name,
+                            self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionUsername.name]
+                        )
 
                     if not self.silent:
-                        dbServerPasswordIsValid = False
-                        while not dbServerPasswordIsValid:
-                            self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionPassword.name] = getpass.getpass("%-- >> Define IDM DB password : ")
-                            if self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionPassword.name] != "":
-                                dbServerPasswordIsValid = True
+                        db_server_password_is_valid = False
+                        while not db_server_password_is_valid:
+                            self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionPassword.name] = \
+                                getpass.getpass("%-- >> Define IDM DB password : ")
+                            if self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionPassword.name] != "":
+                                db_server_password_is_valid = True
                     else:
-                        self.idmJPAProviderManagedServiceCUProcessor.setKeyParamValue(cpHibernateConnectionPassword.name, self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionPassword.name])
+                        self.idmJPAProviderManagedServiceCUProcessor.set_key_param_value(
+                            CPHibernateConnectionPassword.name,
+                            self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionPassword.name]
+                        )
 
                     try:
                         cnx = mysql.connector.connect(
-                            user=self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionUsername.name],
-                            password=self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionPassword.name],
-                            host=dbServerFQDN,
-                            port=dbServerPort,
-                            database=dbName
+                            user=self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionUsername.name],
+                            password=self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionPassword.name],
+                            host=db_server_dqdn,
+                            port=db_server_port,
+                            database=db_name
                         )
-                        idmJPAProviderManagedServiceConnectionDefined = True
+                        idm_jpa_provider_managed_service_connection_defined = True
                         self.dbConfig = {
-                            'user': self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionUsername.name],
-                            'password': self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionPassword.name],
-                            'host': dbServerFQDN,
-                            'port': dbServerPort,
-                            'database': dbName
+                            'user': self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionUsername.name],
+                            'password': self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionPassword.name],
+                            'host': db_server_dqdn,
+                            'port': db_server_port,
+                            'database': db_name
                         }
                     except mysql.connector.Error as err:
                         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
@@ -253,16 +322,29 @@ class idmJPAProviderManagedServiceSyringe:
                     else:
                         cnx.close()
 
-                self.idmJPAProviderManagedServiceCUProcessor.setKeyParamValue(cpHibernateConnectionURL.name, self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionURL.name])
-                self.idmJPAProviderManagedServiceCUProcessor.setKeyParamValue(cpHibernateConnectionUsername.name, self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionUsername.name])
-                self.idmJPAProviderManagedServiceCUProcessor.setKeyParamValue(cpHibernateConnectionPassword.name, self.idmJPAProviderManagedServiceCUValues[cpHibernateConnectionPassword.name])
+                self.idmJPAProviderManagedServiceCUProcessor.set_key_param_value(
+                    CPHibernateConnectionURL.name,
+                    self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionURL.name]
+                )
+                self.idmJPAProviderManagedServiceCUProcessor.set_key_param_value(
+                    CPHibernateConnectionUsername.name,
+                    self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionUsername.name]
+                )
+                self.idmJPAProviderManagedServiceCUProcessor.set_key_param_value(
+                    CPHibernateConnectionPassword.name,
+                    self.idmJPAProviderManagedServiceCUValues[CPHibernateConnectionPassword.name]
+                )
 
-    def getDBConfigFromShoot(self):
+    def get_db_config_from_shoot(self):
         return self.dbConfig
 
     def inject(self):
-        idmJPAProviderManagedServiceCUJSON = open("resources/configvalues/components/cuIDMJPAProviderManagedService.json", "w")
-        jsonStr = json.dumps(self.idmJPAProviderManagedServiceCUValues, sort_keys=True, indent=4, separators=(',', ': '))
-        idmJPAProviderManagedServiceCUJSON.write(jsonStr)
-        idmJPAProviderManagedServiceCUJSON.close()
+        idm_jpa_provider_managed_service_cujson = open(
+            "resources/configvalues/components/cuIDMJPAProviderManagedService.json", "w"
+        )
+        json_str = json.dumps(
+            self.idmJPAProviderManagedServiceCUValues, sort_keys=True, indent=4, separators=(',', ': ')
+        )
+        idm_jpa_provider_managed_service_cujson.write(json_str)
+        idm_jpa_provider_managed_service_cujson.close()
         self.idmJPAProviderManagedServiceCUProcessor.process()
