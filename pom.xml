@@ -74,6 +74,7 @@
 
         <!-- Dependencies versions-->
         <version.javax.annotations.jsr250-api>1.0</version.javax.annotations.jsr250-api>
+        <version.com.fasterxml.jackson>2.1.2</version.com.fasterxml.jackson>
         <version.org.apache.shiro>1.2.2</version.org.apache.shiro>
 
         <!-- JPA / JTA / Hibernate-->
@@ -219,6 +220,18 @@
             <version>3.1.1</version>
         </dependency>
         -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <scope>provided</scope>
+            <version>${version.com.fasterxml.jackson}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <scope>provided</scope>
+            <version>${version.com.fasterxml.jackson}</version>
+        </dependency>
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
